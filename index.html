@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Skyscraper.io</title>
+  <meta name="description" content="A civil-engineering trivia game. Eight prompts, rare answers build higher. Can you reach 1,000 m?" />
+  <meta name="theme-color" content="#0047ab" />
+  <meta property="og:title" content="Skyscraper.io" />
+  <meta property="og:description" content="Eight prompts. Rare answers build higher. Obvious ones barely leave the ground." />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-phase="intro">
+  <!-- backgrounds -->
+  <div id="sky" aria-hidden="true"></div>
+  <div id="endBg" aria-hidden="true">
+    <div id="plans"></div>
+    <div class="watermark">
+      <!-- Drop your organisation's logo at assets/watermark.png to use it here; falls back to the game logo. -->
+      <img id="wmLogo" src="assets/watermark.png" alt="" onerror="this.onerror=null;this.src='assets/logo.svg';this.classList.add('fallback')" />
+      <div class="wm-word">SKYSCRAPER<span>.io</span></div>
+    </div>
+  </div>
+  <canvas id="scene" aria-label="Your tower under construction"></canvas>
+
+  <!-- top bar -->
+  <header id="topbar">
+    <a href="#" id="homeLink" class="brand" aria-label="Skyscraper.io home">
+      <img src="assets/logo.svg" alt="" width="28" height="28" />
+      <span class="word">SKYSCRAPER<span>.io</span></span>
+    </a>
+    <div id="pips" aria-label="Round progress"></div>
+    <div id="hudHeight" class="mono" aria-live="polite">0 m</div>
+  </header>
+
+  <!-- intro -->
+  <section id="intro" class="panel">
+    <div class="eyebrow mono">CIVIL ENGINEERING TRIVIA</div>
+    <h1>Build the tallest tower on the skyline.</h1>
+    <p class="lede">Eight prompts. Each has dozens of right answers — but <b>rarity</b> decides how high you build. Obvious answers barely leave the ground. Deep cuts top out as megatalls.</p>
+    <ol class="steps">
+      <li><b>25 seconds</b> per prompt, one answer each.</li>
+      <li>Every valid answer adds floors. Rarer adds more.</li>
+      <li>Hit <b>1,000 m</b> with eight perfect answers.</li>
+    </ol>
+    <ul id="tierLadder" class="ladder"></ul>
+    <button id="startBtn" class="btn primary wide">Break ground <span aria-hidden="true">▲</span></button>
+    <p id="introBest" class="hint center"></p>
+  </section>
+
+  <!-- question / reveal card -->
+  <section id="card" class="panel" aria-live="polite"></section>
+
+  <!-- end of round -->
+  <section id="end">
+    <div id="endTop">
+      <div id="cadWrap">
+        <canvas id="cad" aria-label="Rotating 3D structural model of your tower. Drag to rotate."></canvas>
+        <ul class="cad-legend mono" aria-label="Model colour legend">
+          <li><i style="background:#0047ab"></i>Columns</li>
+          <li><i style="background:#00a0aa"></i>Beams</li>
+          <li><i style="background:#f5b400"></i>Slabs</li>
+          <li><i style="background:#d6282e"></i>RC core</li>
+          <li><i style="background:#f27814"></i>Belt trusses</li>
+          <li><i style="background:#1a9e5a"></i>Supports</li>
+        </ul>
+        <div class="cad-cap"><b>STRUCTURAL MODEL</b><span id="cadMeta" class="mono"></span><span class="mono drag">DRAG TO ROTATE</span></div>
+      </div>
+      <div id="archCap" class="cad-cap"><b>ARCHITECTURAL MODEL</b><span class="mono">CONCRETE · STEEL · GLASS</span></div>
+    </div>
+    <div id="summary"></div>
+  </section>
+
+  <noscript><p style="padding:2rem;color:#fff">Skyscraper.io needs JavaScript to build towers.</p></noscript>
+
+  <script src="js/config.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="js/matcher.js"></script>
+  <script src="js/tower.js"></script>
+  <script src="js/cad.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
