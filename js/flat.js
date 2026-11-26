@@ -172,8 +172,8 @@
         ctx.beginPath(); ctx.arc(st.x * W, st.y * H, st.r, 0, Math.PI * 2); ctx.fill();
       }
     }
-    // distant skyline silhouette
-    ctx.fillStyle = "rgba(160,195,245,0.16)";
+    // distant skyline silhouette (dark, desaturated so the player's tower reads first)
+    ctx.fillStyle = "rgba(2,16,52,0.42)";
     for (const b of SKYLINE) {
       const x = cx + b.fx * (vp.ruler - vp.x0) * 0.55, w = b.w * (vp.ruler - vp.x0);
       ctx.fillRect(x - w / 2, zOf(b.h), w, b.h * s);
@@ -221,16 +221,16 @@
   function drawFrontClouds(now, vp) { for (const c of CLOUDS) if (c.front) cloud(now, c, vp, 0.5); }
 
   function drawStreet(now, vp, dt) {
-    // neighbours (pale cobalt, flat)
+    // neighbours (dark navy massing, dim windows)
     const span = (vp.ruler - vp.x0) * 0.5;
     for (const n of NEIGH) {
       const w = n.w * (vp.ruler - vp.x0), x = cx + n.fx * span - w / 2, h = n.h * s;
-      ctx.fillStyle = "rgba(170,200,245,0.38)";
+      ctx.fillStyle = "rgba(4,24,70,0.78)";
       ctx.fillRect(x, gy - h, w, h);
-      ctx.fillStyle = "rgba(255,255,255,0.10)";
+      ctx.fillStyle = "rgba(140,175,230,0.10)";
       const fh = Math.max(3, 4 * s);
       for (let y = gy - h + fh; y < gy - 4; y += fh * 1.6) ctx.fillRect(x + 3, y, w - 6, Math.max(1, fh * 0.45));
-      ctx.fillStyle = "rgba(255,255,255,0.45)"; ctx.fillRect(x, gy - h, w, 1.5);
+      ctx.fillStyle = "rgba(140,175,230,0.25)"; ctx.fillRect(x, gy - h, w, 1);
     }
     // ground + street
     ctx.fillStyle = "#003580"; ctx.fillRect(0, gy, W, H - gy);
@@ -257,8 +257,13 @@
     // glass curtain wall
     if (glassTop > 0) {
       const y1 = zOf(glassTop), h = gy - y1;
+      // soft white glow behind the tower so it lifts off the skyline
+      ctx.save();
+      ctx.shadowColor = "rgba(190,220,255,0.85)"; ctx.shadowBlur = 26;
+      ctx.fillStyle = "#cfe2fc"; ctx.fillRect(x0, y1, towerW, h);
+      ctx.restore();
       const g = ctx.createLinearGradient(x0, 0, x0 + towerW, 0);
-      g.addColorStop(0, "#9cc2f7"); g.addColorStop(0.35, "#cfe2fc"); g.addColorStop(0.42, "#e9f2ff"); g.addColorStop(0.55, "#8db6f0"); g.addColorStop(1, "#5d8fd9");
+      g.addColorStop(0, "#b8d5fb"); g.addColorStop(0.35, "#e4efff"); g.addColorStop(0.42, "#ffffff"); g.addColorStop(0.55, "#a9cbf7"); g.addColorStop(1, "#7aa6e6");
       ctx.fillStyle = g; ctx.fillRect(x0, y1, towerW, h);
       // mechanical floors every 60 m
       ctx.fillStyle = "rgba(0,48,122,0.45)";
@@ -274,7 +279,7 @@
       ctx.beginPath();
       for (let k = 1; k < 6; k++) { const x = Math.round(x0 + towerW * k / 6) + 0.5; ctx.moveTo(x, y1); ctx.lineTo(x, gy); }
       ctx.stroke();
-      ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1.5; ctx.strokeRect(x0 + 0.5, y1 + 0.5, towerW - 1, h - 1);
+      ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2.5; ctx.strokeRect(x0 + 1, y1 + 1, towerW - 2, h - 2);
       // light sweep after a Supertall / Megatall gain
       if (sweep) {
         const k = (now - sweep.t0) / 650;
