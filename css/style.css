@@ -29,23 +29,26 @@ button { font: inherit; }
 /* ---------- backgrounds ---------- */
 #sky {
   position: fixed; inset: 0; z-index: 0;
+  /* blueprint grid: fine 24px cells, stronger 120px major lines */
   background:
-    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 48px 48px,
-    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(rgba(255,255,255,0.09) 1px, transparent 1px) -1px -1px / 120px 120px,
+    linear-gradient(90deg, rgba(255,255,255,0.09) 1px, transparent 1px) -1px -1px / 120px 120px,
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px) -1px -1px / 24px 24px,
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px) -1px -1px / 24px 24px,
     linear-gradient(180deg, #003b93 0%, #0047ab 45%, #1a5cc0 100%);
   transition: opacity 1.4s ease;
 }
-#endBg { position: fixed; inset: 0; z-index: 1; opacity: 0; transition: opacity 1.4s ease 0.3s; pointer-events: none; }
-.watermark {
-  position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%);
-  display: flex; flex-direction: column; align-items: center; gap: 1.2vmin;
-  opacity: 0.15;
-}
-.watermark img { width: min(80vw, 100vmin); height: auto; max-height: 72vh; object-fit: contain; }
-.watermark img.fallback { width: 42vmin; height: 42vmin; }
-.watermark img:not(.fallback) + .wm-word { display: none; }
-.wm-word { font-weight: 700; font-size: 9vmin; letter-spacing: 0.04em; color: var(--cobalt); line-height: 1; }
-.wm-word span, .brand .word span { font-weight: 400; color: var(--cobalt-light); }
+#endBg {
+  position: fixed; inset: 0; z-index: 1; opacity: 0;
+  /* end screen: cobalt blueprint grid on white */
+  background:
+    linear-gradient(rgba(0,71,171,0.09) 1px, transparent 1px) -1px -1px / 120px 120px,
+    linear-gradient(90deg, rgba(0,71,171,0.09) 1px, transparent 1px) -1px -1px / 120px 120px,
+    linear-gradient(rgba(0,71,171,0.04) 1px, transparent 1px) -1px -1px / 24px 24px,
+    linear-gradient(90deg, rgba(0,71,171,0.04) 1px, transparent 1px) -1px -1px / 24px 24px,
+    var(--white);
+ transition: opacity 1.4s ease 0.3s; pointer-events: none; }
+.brand .word span { font-weight: 400; color: var(--cobalt-light); }
 #plans .plan { position: absolute; width: 230px; opacity: 0.17; }
 #plans .plan svg { width: 100%; height: auto; display: block; }
 #plans .p1 { left: 1.5%; top: 9%; transform: rotate(-4deg); }
@@ -70,11 +73,10 @@ body[data-phase="end"] #endBg { opacity: 1; }
 }
 body[data-phase="end"] #topbar::before { opacity: 0; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-.brand img { background: var(--white); border-radius: 8px; padding: 3px; }
+.brand img { display: block; width: auto; height: 40px; background: var(--white); border-radius: 8px; padding: 3px 4px; box-shadow: 0 1px 4px rgba(0,30,80,0.18); }
 .brand .word { font-weight: 700; font-size: 18px; letter-spacing: 0.05em; }
 .brand .word span { color: rgba(255,255,255,0.7); }
 body[data-phase="end"] #topbar { color: var(--cobalt); }
-body[data-phase="end"] .brand img { background: var(--cobalt-pale); }
 body[data-phase="end"] .brand .word span { color: var(--cobalt-light); }
 #pips { display: flex; gap: 6px; margin-left: auto; margin-right: auto; }
 .pip { width: 26px; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.22); transition: background 0.3s, transform 0.3s; }
@@ -240,6 +242,7 @@ form.shake { animation: shake 0.3s; }
   :root { --top-h: 54px; }
   #topbar { padding: 0 12px; gap: 10px; }
   .brand .word { font-size: 15px; }
+  .brand img { height: 36px; }
   .pip { width: 14px; height: 7px; }
   #pips { gap: 4px; margin-right: 0; }
   #hudHeight { display: none; }
@@ -273,7 +276,6 @@ form.shake { animation: shake 0.3s; }
   .sum-height { font-size: 56px; }
   #plans .plan { width: 140px; }
   #plans .p3, #plans .p4 { display: none; }
-  .watermark img { width: 50vmin; height: 50vmin; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -29,7 +29,7 @@ Each visit draws a fresh random set of 8 prompts. Prompts you have seen recently
 ## How it looks
 
 - **While building:** a cobalt sky over a white "massing model" city. Your tower goes up as a construction timelapse: glass curtain wall, an exposed steel frame and slabs at the working face, a concrete core with climbing formwork, and a tower crane on top. Clouds and the building's shadow race across the scene while it grows. A ruler on the right shows the height, with ghost lines for real landmarks.
-- **When it tops out:** the page turns white with a faint logo watermark. The crane leaves, and the crown and spire complete. The tower slides to the right, a rotating 3D structural CAD model appears on the left (drag to spin), and structural plan sheets sit faintly in the background. The summary in the middle shows your eight answers and every milestone you cleared.
+- **When it tops out:** the page turns white over a faint cobalt blueprint grid. The crane leaves, and the crown and spire complete. The tower slides to the right, a rotating 3D structural CAD model appears on the left (drag to spin), and structural plan sheets sit faintly in the background. The summary in the middle shows your eight answers and every milestone you cleared.
 
 The tower is a **bundled tube**: a 3 × 3 grid of 24 m cells. Each outer cell tops out at its own height (150 m to 880 m), so taller towers step back like real megatalls. The CAD model shows belt trusses at each of those transfer levels.
 
@@ -85,7 +85,7 @@ It reports duplicate keys and answers that could be confused through typo tolera
 
 ## Customising
 
-- **Watermark logo:** the results screen shows `assets/watermark.png` (the ACI TIP Quezon City Student Chapter logo, with its white background made transparent) at 15% opacity. Replace the file to change it, or delete it to fall back to the game logo.
+- **Chapter logo:** the header shows `assets/aci-chapter-logo.png` (the ACI TIP Quezon City Student Chapter logo, cropped from the transparent original). Replace the file to change it.
 - **Tiers, milestones, round size, timer:** edit [`js/config.js`](js/config.js).
 
 ## Files
