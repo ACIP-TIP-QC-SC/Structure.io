@@ -17,8 +17,20 @@ const src = fs.readFileSync(path.join(__dirname, "..", "data", "questions.js"), 
 const sandbox = { window: {} };
 vm.runInNewContext(src, sandbox);
 const data = sandbox.window.SKYSCRAPER_DATA;
+let expErrors = 0;
+const expPath = path.join(__dirname, "..", "data", "expansions.js");
+if (fs.existsSync(expPath)) {
+  vm.runInNewContext(fs.readFileSync(expPath, "utf8"), sandbox);
+  const r = M.applyExpansions(data, sandbox.window.SKYSCRAPER_EXPANSIONS);
+  console.log(`expansions.js: ${r.added} answers merged, ${r.skipped} skipped as duplicates of curated answers`);
+  for (const id of Object.keys(sandbox.window.SKYSCRAPER_EXPANSIONS || {})) {
+    if (!data.questions.some(q => q.id === id)) { console.log(`ERROR  expansions.js: unknown prompt id "${id}"`); expErrors++; }
+  }
+}
 
 let errors = 0, warnings = 0, answers = 0;
+const cats = {};
+const quiet = process.argv.includes("--quiet");
 const ids = new Set();
 for (const q of data.questions) {
   if (!q.id || !q.prompt || !q.tiers) { console.log(`ERROR  prompt missing id/prompt/tiers: ${JSON.stringify(q).slice(0, 80)}`); errors++; continue; }
@@ -27,6 +39,16 @@ for (const q of data.questions) {
   for (const t of Object.keys(q.tiers)) if (!M.TIER_ORDER.includes(t)) { console.log(`ERROR  ${q.id}: unknown tier "${t}"`); errors++; }
   if (!(q.tiers.megatall || []).length) { console.log(`WARN   ${q.id}: no megatall (gem) answer`); warnings++; }
   const { bank } = M.buildBank(q);
+  // facts: every gem needs one, and every key must be a display name in this prompt
+  const facts = q.facts || {};
+  const displays = new Set(bank.map(e => e.display));
+  for (const e of bank.filter(e => e.tier === "megatall")) {
+    if (!facts[e.display]) { console.log(`ERROR  ${q.id}: gem "${e.display}" has no facts entry`); errors++; }
+  }
+  for (const k of Object.keys(facts)) {
+    if (!displays.has(k)) { console.log(`ERROR  ${q.id}: facts key "${k}" is not a display name in this prompt`); errors++; }
+  }
+  cats[q.category || "(none)"] = (cats[q.category || "(none)"] || 0) + 1;
   answers += bank.length;
   const seen = new Map();
   for (const e of bank) for (const k of e.keys) {
@@ -43,10 +65,13 @@ for (const q of data.questions) {
     if (ea === eb || ea.tier === eb.tier) continue;
     const tol = Math.min(M.tolerance(ka.length), M.tolerance(kb.length));
     if (tol && M.lev(ka, kb, tol) <= tol) {
-      console.log(`WARN   ${q.id}: "${ka}" (${ea.tier}) ≈ "${kb}" (${eb.tier}) — typo tolerance may confuse them`);
+      if (!quiet) console.log(`WARN   ${q.id}: "${ka}" (${ea.tier}) ≈ "${kb}" (${eb.tier}) — typo tolerance may confuse them`);
       warnings++;
     }
   }
 }
+errors += expErrors;
+console.log("\nPrompts per category:");
+for (const [c, n] of Object.entries(cats).sort((a, b) => b[1] - a[1])) console.log(`  ${String(n).padStart(3)}  ${c}`);
 console.log(`\n${data.questions.length} prompts · ${answers} answers · ${errors} errors · ${warnings} warnings`);
 process.exit(errors ? 1 : 0);

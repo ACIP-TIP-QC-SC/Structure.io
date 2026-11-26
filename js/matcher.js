@@ -81,7 +81,33 @@
     return best ? { entry: best, distance: bestD } : null;
   }
 
-  const api = { TIER_ORDER, norm, key, buildBank, match, lev, tolerance };
+  // Merge long-tail answer lists (data/expansions.js) into prompts by id.
+  // An expansion entry is skipped if any of its keys already belongs to an answer in that prompt,
+  // so the curated tiers in questions.js always win. Returns {added, skipped}.
+  function applyExpansions(data, exp) {
+    let added = 0, skipped = 0;
+    if (!data || !exp) return { added, skipped };
+    for (const q of data.questions) {
+      const ext = exp[q.id];
+      if (!ext) continue;
+      const strip = new Set((q.strip || []).map(w => singular(norm(w))));
+      const taken = new Set();
+      for (const t of TIER_ORDER) for (const e of (q.tiers[t] || [])) for (const a of String(e).split("|")) taken.add(key(a, strip));
+      for (const t of TIER_ORDER) {
+        for (const e of ext[t] || []) {
+          const keys = String(e).split("|").map(a => key(a, strip)).filter(Boolean);
+          if (!keys.length || keys.some(k => taken.has(k))) { skipped++; continue; }
+          keys.forEach(k => taken.add(k));
+          (q.tiers[t] = q.tiers[t] || []).push(e);
+          added++;
+        }
+      }
+      delete q._bank;
+    }
+    return { added, skipped };
+  }
+
+  const api = { TIER_ORDER, norm, key, buildBank, match, lev, tolerance, applyExpansions };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.SkyMatcher = api;
 })(this);
