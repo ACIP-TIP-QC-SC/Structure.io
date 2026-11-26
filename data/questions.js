@@ -405,6 +405,101 @@ window.SKYSCRAPER_DATA = {
       facts: { "Metre of water": "Pressure written as the height of a water column: 10 m of water is roughly one atmosphere. Hydraulics engineers still say 'head'." }
     },
 
+    /* ---- units prompts (Ellis, 2026-11-26: "like name a unit of pressure or stress") ---- */
+    {
+      id: "temperature-units",
+      category: "Units",
+      prompt: "Name a unit or scale of temperature.",
+      strip: ["degree", "scale"],
+      tiers: {
+        lowrise: ["Celsius|°C|C|Centigrade", "Fahrenheit|°F|F", "Kelvin|K"],
+        vanity: [],
+        highrise: ["Rankine|°R|R"],
+        skyscraper: ["Réaumur|Reaumur|°Ré|Re", "Millikelvin|mK"],
+        supertall: ["Delisle|°De|De", "Newton|°N|N", "Planck temperature|Planck"],
+        megatall: ["Rømer|Romer|Roemer|°Rø"]
+      },
+      facts: { "Rømer": "Danish astronomer Ole Rømer's 1701 scale put brine's freezing point at 0 and water's boiling point at 60; Fahrenheit visited him and built his own scale from it." }
+    },
+    {
+      id: "length-units",
+      category: "Units",
+      prompt: "Name a unit of length or distance.",
+      strip: [],
+      tiers: {
+        lowrise: ["Metre|Meter|m", "Centimetre|Centimeter|cm", "Millimetre|Millimeter|mm", "Kilometre|Kilometer|km", "Inch|Inches|in", "Foot|Feet|ft"],
+        vanity: ["Light-year|Light year|ly"],
+        highrise: ["Yard|yd", "Mile|mi", "Micrometre|Micrometer|Micron|um", "Nanometre|Nanometer|nm", "Nautical mile|nmi", "Decimetre|Decimeter|dm"],
+        skyscraper: ["Chain|Gunter's chain|Gunters chain|Surveyor's chain", "Rod|Pole|Perch", "Furlong", "Fathom", "Ångström|Angstrom|Å", "Mil|Thou", "Astronomical unit|AU", "League", "Hand", "Dangkal"],
+        supertall: ["Link|Gunter's link", "Cubit", "Parsec|pc", "Span", "Picometre|Picometer|pm", "Station"],
+        megatall: ["Vara|Spanish vara"]
+      },
+      facts: {
+        "Vara": "The Spanish vara (about 0.84 m) still turns up on old Philippine land titles and survey plans, so surveyors here have to convert it.",
+        "Dangkal": "The Filipino hand-span, thumb tip to little-finger tip: a body measure still used informally on site."
+      }
+    },
+    {
+      id: "force-units",
+      category: "Units",
+      prompt: "Name a unit of force.",
+      strip: [],
+      tiers: {
+        lowrise: ["Newton|N", "Kilonewton|kN", "Pound|Pound-force|lb|lbf"],
+        vanity: [],
+        highrise: ["Kip|Kips|Kilopound", "Kilogram-force|kgf|Kilopond|kp", "Dyne|dyn", "Tonne-force|Ton-force|tf|Metric ton-force", "Meganewton"],
+        skyscraper: ["Poundal|pdl", "Gram-force|gf", "Millinewton"],
+        supertall: ["Ounce-force|ozf"],
+        megatall: ["Sthène|Sthene|sn"]
+      },
+      facts: { "Sthène": "The force unit of France's old metre–tonne–second system: one sthène pushes one tonne to 1 m/s², which is exactly 1 kN." }
+    },
+    {
+      id: "energy-units",
+      category: "Units",
+      prompt: "Name a unit of energy or work.",
+      strip: [],
+      tiers: {
+        lowrise: ["Joule|J", "Calorie|cal", "Kilowatt-hour|kWh|Kilowatt hour"],
+        vanity: [],
+        highrise: ["Kilojoule|kJ", "Kilocalorie|kcal|Food calorie", "British thermal unit|BTU", "Electronvolt|Electron volt|eV", "Megajoule|MJ", "Watt-hour|Watt hour|Wh", "Erg", "Newton-metre|Newton meter|N·m|N-m", "Foot-pound|Foot pound|ft-lb|ft·lbf"],
+        skyscraper: ["Therm", "Ton of TNT|TNT equivalent|Kiloton|Megaton", "Megawatt-hour|MWh", "Gigajoule|GJ", "Horsepower-hour|hp·h|hp-h", "Gigawatt-hour|GWh", "Inch-pound|in-lb"],
+        supertall: ["Tonne of oil equivalent|toe", "Barrel of oil equivalent|BOE", "Quad", "Hartree", "Rydberg"],
+        megatall: ["Foe|Bethe"]
+      },
+      facts: { "Foe": "Short for 'ten to the fifty-one ergs' (10^44 J): astronomers use it to measure the energy of a supernova." }
+    },
+    {
+      id: "volume-units",
+      category: "Units",
+      prompt: "Name a unit of volume.",
+      strip: [],
+      tiers: {
+        lowrise: ["Litre|Liter|L", "Cubic metre|Cubic meter|m3|cu m|cu.m", "Millilitre|Milliliter|mL|cc|Cubic centimetre|Cubic centimeter|cm3"],
+        vanity: [],
+        highrise: ["Gallon|gal", "Cubic foot|Cubic feet|ft3|cu ft", "Board foot|Board feet|bd ft|BF", "Cubic yard|yd3|cu yd", "Cubic inch|in3|cu in", "Barrel|bbl", "Fluid ounce|fl oz", "Quart|qt", "Pint|pt", "Cup", "Cubic millimetre|Cubic millimeter|mm3"],
+        skyscraper: ["Hectolitre|Hectoliter|hL", "Kilolitre|Kiloliter|kL", "Cord", "Million gallons|MG", "Tablespoon|tbsp", "Teaspoon|tsp", "Bushel"],
+        supertall: ["Stere|Stère", "Gill", "Minim", "Hogshead", "Peck"],
+        megatall: ["Acre-foot|Acre-feet|Acre foot|ac-ft"]
+      },
+      facts: { "Acre-foot": "The water that covers one acre one foot deep, about 1,233 m³. Dam and irrigation engineers in the US still size reservoirs in acre-feet." }
+    },
+    {
+      id: "mass-units",
+      category: "Units",
+      prompt: "Name a unit of mass.",
+      strip: [],
+      tiers: {
+        lowrise: ["Kilogram|kg|Kilo", "Gram|g", "Pound|lb|lbs", "Tonne|Metric ton|t|Ton"],
+        vanity: [],
+        highrise: ["Milligram|mg", "Ounce|oz", "Slug", "Short ton|US ton", "Long ton|Imperial ton", "Microgram|mcg", "Carat|ct", "Stone|st"],
+        skyscraper: ["Grain|gr", "Quintal", "Atomic mass unit|amu|Dalton|Da", "Hundredweight|cwt", "Troy ounce|ozt", "Megagram", "Pennyweight|dwt"],
+        supertall: ["Catty|Kati|Chin", "Tael", "Arroba", "Kip-mass"],
+        megatall: ["Picul|Pikul|Pico"]
+      },
+      facts: { "Picul": "A 'shoulder load' of about 63 kg. Philippine sugar output was reported in piculs for generations, and Spanish records wrote it 'pico'." }
+    },
+
     /* =================== NEW SIMPLE PROMPTS =================== */
     {
       id: "cement-types",
@@ -547,12 +642,12 @@ window.SKYSCRAPER_DATA = {
     {
       id: "civil-engineers",
       category: "People",
-      prompt: "Name a famous civil or structural engineer.",
+      prompt: "Name a famous civil or structural engineer, or a well-known CE textbook author.",
       strip: [],
       tiers: {
         lowrise: ["Gustave Eiffel|Eiffel", "Isambard Kingdom Brunel|Brunel|IK Brunel|Isambard Brunel"],
         vanity: ["Emily Warren Roebling|Emily Roebling"],
-        highrise: ["John Roebling|John A. Roebling|Roebling", "Washington Roebling", "Karl Terzaghi|Terzaghi", "Hardy Cross|Cross", "Fazlur Rahman Khan|Fazlur Khan|FR Khan", "Thomas Telford|Telford", "John Smeaton|Smeaton", "Joseph Strauss|Strauss"],
+        highrise: ["John Roebling|John A. Roebling|Roebling", "Washington Roebling", "Karl Terzaghi|Terzaghi", "Hardy Cross|Cross", "Fazlur Rahman Khan|Fazlur Khan|FR Khan", "Thomas Telford|Telford", "John Smeaton|Smeaton", "Joseph Strauss|Strauss", "R. C. Hibbeler|RC Hibbeler|Russell C. Hibbeler|Russell Hibbeler|Hibbeler", "DIT Gillesania|D.I.T. Gillesania|Diego Inocencio Tapang Gillesania|Gillesania", "Venancio Besavilla|Besavilla|Venancio I. Besavilla Jr.", "Stephen Timoshenko|Timoshenko"],
         skyscraper: ["Ove Arup|Arup", "Othmar Ammann|Ammann", "Santiago Calatrava|Calatrava", "Pier Luigi Nervi|Nervi", "Imhotep", "M. Visvesvaraya|Visvesvaraya", "Joseph Bazalgette|Bazalgette", "Leslie Robertson", "William Le Baron Jenney|Le Baron Jenney", "Benjamin Baker", "Arthur Casagrande|Casagrande", "Ralph Peck|Peck"],
         supertall: ["Eugène Freyssinet|Eugene Freyssinet|Freyssinet", "Félix Candela|Felix Candela|Candela", "Heinz Isler|Isler", "Fritz Leonhardt|Leonhardt", "Christian Menn|Menn", "Jörg Schlaich|Jorg Schlaich|Schlaich", "Peter Rice", "William Mulholland|Mulholland"],
         megatall: ["Robert Maillart|Maillart"]

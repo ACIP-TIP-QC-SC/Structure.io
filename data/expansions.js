@@ -190,11 +190,16 @@ window.SKYSCRAPER_EXPANSIONS = {
       "E. Sreedharan|Sreedharan", "Nathan Newmark|Newmark", "Alec Skempton|Skempton", "Laurits Bjerrum|Bjerrum", "Ray Clough|Clough",
       "Anil Chopra|Chopra", "Thomas Paulay|Paulay", "Robert Park", "Mete Sozen|Sozen", "Karl Culmann|Culmann", "Henry Darcy|Darcy",
       "Robert Manning|Manning", "Benjamin Latrobe|Latrobe", "John B. Jervis|Jervis", "Loammi Baldwin", "Charles Ellis", "Conde McCullough|McCullough",
-      "John A. L. Waddell|Waddell", "Squire Whipple|Whipple", "Arthur Vierendeel|Vierendeel", "Hal Iyengar|Iyengar", "Alfredo Juinio|Juinio"
+      "John A. L. Waddell|Waddell", "Squire Whipple|Whipple", "Arthur Vierendeel|Vierendeel", "Hal Iyengar|Iyengar", "Alfredo Juinio|Juinio",
+      "Frank M. White|Frank White", "Braja M. Das|Braja Das", "Ferdinand Beer|Ferdinand P. Beer|Beer and Johnston|Beer & Johnston", "E. Russell Johnston|Russell Johnston|Johnston",
+      "James Gere|James M. Gere|Gere", "Arthur Nilson|Arthur H. Nilson|Nilson", "Max Fajardo|Max B. Fajardo|Fajardo", "Ferdinand Singer|Singer|Singer and Pytel",
+      "Andrew Pytel|Pytel", "Jack McCormac|McCormac", "Charles Salmon|Salmon and Johnson", "George Winter", "Edward Nawy|Edward G. Nawy|Nawy",
+      "James MacGregor|MacGregor|MacGregor and Wight", "James K. Wight|James Wight", "Joseph Bowles|Joseph E. Bowles|Bowles", "Victor Streeter|Streeter",
+      "Ven Te Chow|Chow", "Nicholas Garber|Garber|Garber and Hoel"
     ],
     supertall: [
       "Li Bing", "Li Chun", "Anton Tedesko|Tedesko", "Mamoru Kawaguchi|Kawaguchi", "Mutsuro Sasaki", "Sir John Wolfe Barry|Wolfe Barry",
-      "Benjamin Wright", "Henri Pitot|Pitot", "Wilhelm Ritter", "Emil Mörsch|Morsch", "François Hennebique|Hennebique", "Joseph Monier|Monier",
+      "Benjamin Wright", "Henri Pitot|Pitot", "Wilhelm Ritter", "Emil Mörsch|Morsch", "François Hennebique|Hennebique", "Joseph Monier|Monier", "Aslam Kassimali|Kassimali", "Chu-Kia Wang|C. K. Wang|CK Wang", "Egor Popov|Popov", "Mario Paz"
     ]
   },
 
