@@ -20,7 +20,9 @@
   <div id="endBg" aria-hidden="true">
     <div id="plans"></div>
   </div>
-  <canvas id="scene" aria-label="Your tower under construction"></canvas>
+  <canvas id="flat" aria-label="Your tower under construction"></canvas>
+  <canvas id="scene" aria-label="Your finished tower"></canvas>
+  <canvas id="fx" aria-hidden="true"></canvas>
 
   <!-- top bar -->
   <header id="topbar">
@@ -29,7 +31,12 @@
       <span class="word">SKYSCRAPER<span>.io</span></span>
     </a>
     <div id="pips" aria-label="Round progress"></div>
-    <div id="hudHeight" class="mono" aria-live="polite">0 m</div>
+    <div id="hud">
+      <button id="muteBtn" class="icon-btn" aria-pressed="false" aria-label="Mute sound" title="Sound on/off">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="wave" d="M16 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="cross" d="M16 9l6 6M22 9l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="hud-box"><span class="hud-label mono">HEIGHT</span><span id="hudHeight" class="mono" aria-live="polite">0 m</span><span id="hudTier" class="mono"></span></div>
+    </div>
   </header>
 
   <!-- intro -->
@@ -38,10 +45,19 @@
     <h1>Build the tallest tower on the skyline.</h1>
     <p class="lede">Eight prompts. Each has dozens of right answers — but <b>rarity</b> decides how high you build. Obvious answers barely leave the ground. Deep cuts top out as megatalls.</p>
     <ol class="steps">
-      <li><b>25 seconds</b> per prompt, one answer each.</li>
+      <li>Read the prompt, then <b>25 seconds</b> to answer.</li>
       <li>Every valid answer adds floors. Rarer adds more.</li>
       <li>Hit <b>1,000 m</b> with eight perfect answers.</li>
     </ol>
+    <div class="tips">
+      <div class="tips-title mono">HOW TO BUILD TALL</div>
+      <ul>
+        <li>Skip the first answer that pops into your head.</li>
+        <li>Dodge the clever trap: everyone else thought of it too.</li>
+        <li>Go one level more specific: a sub-type, a region, a code term.</li>
+        <li>Only type what you're sure is right.</li>
+      </ul>
+    </div>
     <ul id="tierLadder" class="ladder"></ul>
     <button id="startBtn" class="btn primary wide">Break ground <span aria-hidden="true">▲</span></button>
     <p id="introBest" class="hint center"></p>
@@ -49,6 +65,10 @@
 
   <!-- question / reveal card -->
   <section id="card" class="panel" aria-live="polite"></section>
+
+  <!-- full-screen tier reveal -->
+  <section id="reveal" hidden aria-live="assertive"></section>
+  <div id="topping" hidden><div class="topping-text mono">TOPPING OUT…</div></div>
 
   <!-- end of round -->
   <section id="end">
@@ -77,6 +97,9 @@
   <script src="js/matcher.js"></script>
   <script src="data/expansions.js"></script>
   <script>SkyMatcher.applyExpansions(window.SKYSCRAPER_DATA, window.SKYSCRAPER_EXPANSIONS);</script>
+  <script src="js/sfx.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/flat.js"></script>
   <script src="js/tower.js"></script>
   <script src="js/cad.js"></script>
   <script src="js/game.js"></script>
