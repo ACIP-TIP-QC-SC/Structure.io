@@ -249,21 +249,6 @@ window.SKYSCRAPER_DATA = {
       facts: { "Superelevation": "Tilting a curved road toward the inside so part of the car's weight pushes it around the bend instead of relying on tyre friction alone." }
     },
     {
-      id: "truss-types",
-      category: "Structures",
-      prompt: "Name a named type of truss.",
-      strip: ["truss"],
-      tiers: {
-        lowrise: ["Pratt", "Howe", "Warren"],
-        vanity: ["Vierendeel"],
-        highrise: ["King post|Kingpost", "Queen post|Queenpost", "Fink", "Scissor|Scissors", "Bowstring", "K-truss|K", "Baltimore", "Parker", "Lattice", "Fan"],
-        skyscraper: ["Pennsylvania|Petit", "Camelback", "Town lattice|Town", "Whipple", "Bailey", "Gambrel", "Attic|Room-in-roof", "Mono-pitch|Monopitch|Mono", "Raised tie", "Space truss|Space frame"],
-        supertall: ["Long", "Waddell|Waddell A", "Burr|Burr arch", "Bollman", "Belt|Belt truss|Outrigger truss"],
-        megatall: ["Lenticular|Pauli|Lens"]
-      },
-      facts: { "Lenticular": "Both chords curve, top up and bottom down, so the truss looks like a lens: the shape follows the bending moment of a simple span." }
-    },
-    {
       id: "structural-failures",
       category: "History",
       prompt: "Name a famous structural collapse or engineering failure.",
@@ -623,22 +608,6 @@ window.SKYSCRAPER_DATA = {
       facts: { "Special truss moment frame": "NSCP 2015 §525: a steel frame whose trusses have a 'special segment' at mid-span designed to yield in an earthquake while the rest stays elastic." }
     },
     {
-      id: "nscp-irregularities",
-      category: "NSCP 2015",
-      prompt: "Name a structural irregularity checked in earthquake design (plan or vertical).",
-      strip: ["irregularity", "irregular"],
-      tiers: {
-        lowrise: ["Soft storey|Soft story|Stiffness", "Torsional|Torsion"],
-        vanity: [],
-        highrise: ["Weak storey|Weak story|Capacity discontinuity", "Re-entrant corner|Reentrant corner|Re-entrant|Reentrant", "Mass|Weight", "Vertical geometric|Setback|Geometric", "Diaphragm discontinuity|Diaphragm"],
-        skyscraper: ["In-plane discontinuity|In plane discontinuity|In-plane offset", "Out-of-plane offset|Out of plane offset|Out-of-plane", "Extreme torsional|Extreme torsion", "Extreme soft storey|Extreme soft story"],
-        supertall: [],
-        megatall: ["Nonparallel systems|Non-parallel systems|Nonparallel|Non-parallel"]
-      },
-      source: "NSCP 2015 §202 (SOFT STOREY: lateral stiffness < 70% of the storey above; WEAK STOREY: storey strength < 80% of the storey above), Table 208-9 (vertical) and Table 208-10 (plan) — builder: confirm the plan-irregularity table number on the scan",
-      facts: { "Nonparallel systems": "When the walls or frames resisting earthquakes aren't parallel to the building's main axes, the code makes you design for forces from both directions at once." }
-    },
-    {
       id: "nscp-seismic-terms",
       category: "NSCP 2015",
       prompt: "Name a term or factor used in NSCP earthquake design.",
@@ -653,22 +622,6 @@ window.SKYSCRAPER_DATA = {
       },
       source: "NSCP 2015 §202 (Base Shear, Design Basis Ground Motion, Design Response Spectrum, Importance Factor, Orthogonal Effects, Overstrength, P∆ Effect, Storey Drift Ratio, Storey Shear); §208.3 symbols (Ca, Cv, Na, Nv, Ft, Ax); Tables 208-2 to 208-5",
       facts: { "Near-source factor": "NSCP 2015 §208: Na and Nv raise the design forces for sites in Seismic Zone 4 that are close to a known active fault, such as the West Valley Fault." }
-    },
-    {
-      id: "nscp-soil-profiles",
-      category: "NSCP 2015",
-      prompt: "Name a soil profile type used in NSCP seismic design (by letter or by name).",
-      strip: ["soil", "profile", "type"],
-      tiers: {
-        lowrise: ["Soft soil|SE|S E", "Rock|SB|S B"],
-        vanity: [],
-        highrise: ["Hard rock|SA|S A", "Stiff soil|SD|S D"],
-        skyscraper: ["Very dense soil and soft rock|SC|S C|Very dense soil|Soft rock"],
-        supertall: [],
-        megatall: ["SF|S F|Site-specific evaluation|Liquefiable|Requiring site-specific evaluation"]
-      },
-      source: "NSCP 2015 §208.4.3, Table 208-2 Soil Profile Types (SA hard rock, SB rock, SC very dense soil and soft rock 360–760 m/s, SD stiff soil 180–360 m/s, SE soft soil < 180 m/s, SF soil requiring site-specific evaluation)",
-      facts: { "SF": "SF soils, such as liquefiable sands, sensitive clays and thick peat, are so unpredictable in an earthquake that NSCP requires a site-specific study." }
     },
     {
       id: "nscp-reinforcement",
@@ -701,38 +654,6 @@ window.SKYSCRAPER_DATA = {
       },
       source: "NSCP 2015 §402.3 (Contraction Joint, Isolation Joint, Joint, Nodal Zone, Node), §415 (beam-column and slab-column joints)",
       facts: { "Nodal zone": "NSCP 2015 §402.3: in a strut-and-tie model, the volume of concrete where struts and ties meet and swap forces. It is the 'joint' of an imaginary truss inside the concrete." }
-    },
-    {
-      id: "nscp-anchors",
-      category: "NSCP 2015",
-      prompt: "Name a type of anchor used to fasten things to concrete.",
-      strip: ["anchor", "anchors", "bolt"],
-      tiers: {
-        lowrise: ["Cast-in|Cast in|Cast-in-place", "Expansion|Wedge", "Anchor bolt|Bolt"],
-        vanity: [],
-        highrise: ["Post-installed|Post installed|Drilled-in", "Adhesive|Chemical|Epoxy", "Headed|Headed bolt", "Hooked|J-bolt|L-bolt|J|L|Hooked bolt", "Headed stud|Stud|Shear stud"],
-        skyscraper: ["Sleeve", "Screw|Concrete screw", "Drop-in|Drop in", "Embedded plate|Embed plate|Embed"],
-        supertall: ["Specialty insert|Insert|Cast-in channel|Anchor channel", "Group|Anchor group", "Horizontal or upwardly inclined|Upwardly inclined|Overhead"],
-        megatall: ["Undercut"]
-      },
-      source: "NSCP 2015 §402.3 (Anchor; Anchor, Cast-In; Headed Bolt; Hooked Bolt (J- or L-bolt); Headed Stud; Post-Installed; Adhesive; Expansion; Undercut; Anchor Group; Horizontal or Upwardly Inclined; Specialty Insert), §417",
-      facts: { "Undercut": "NSCP 2015 §402.3: the drill flares the bottom of the hole wider than the top, so the anchor locks in mechanically like a dovetail instead of relying on friction or glue." }
-    },
-    {
-      id: "nscp-welds",
-      category: "NSCP 2015",
-      prompt: "Name a type of weld used in structural steel.",
-      strip: ["weld", "welds", "welding", "welded"],
-      tiers: {
-        lowrise: ["Fillet", "Groove|Butt", "Spot"],
-        vanity: [],
-        highrise: ["Slot", "Complete joint penetration|CJP|Full penetration|Full-penetration", "Partial joint penetration|PJP|Partial penetration", "Tack", "Stitch|Intermittent|Skip"],
-        skyscraper: ["Flare bevel groove|Flare bevel", "Flare V-groove|Flare V", "Bevel|Single bevel", "V-groove|Single V|Double V", "Seam", "Stud|Stud welding", "Demand critical|Demand-critical"],
-        supertall: ["J-groove|J groove", "U-groove|U groove", "Square groove|Square", "Arc spot|Puddle", "Arc seam", "Fillet weld reinforcement|Reinforcing fillet|Contouring fillet"],
-        megatall: ["Plug"]
-      },
-      source: "NSCP 2015 Ch5 glossary (Fillet Weld, Groove Weld, Plug Weld, Slot Weld, Weld (CJP), Weld (PJP), Flare Bevel Groove Weld, Flare V-Groove Weld, Fillet Weld Reinforcement); §528.10 demand critical welds; §555 cold-formed arc spot/seam welds",
-      facts: { "Plug": "NSCP 2015 Ch5: weld metal fills a round hole in one plate to fuse it to the plate underneath, like a rivet made of weld." }
     },
     {
       id: "nscp-steel-failure-modes",
@@ -830,21 +751,67 @@ window.SKYSCRAPER_DATA = {
       source: "NSCP 2015 §102 (As Graded, Bedrock, Bench, Borrow, Compaction, Earth Material, Erosion, Excavation, Existing Grade, Fill, Finish Grade, Grade, Grading, Key, Rough Grade, Slope, Soil, Terrace), §302",
       facts: { "Key": "NSCP 2015 §102: a compacted-fill trench dug under the toe of a fill slope that locks the whole slope into the ground." }
     },
+
+    /* ---- simple "name a type of …" prompts added after member feedback ---- */
     {
-      id: "nscp-wind-classes",
-      category: "NSCP 2015",
-      prompt: "Name a building classification used in NSCP wind design.",
-      strip: ["building"],
+      id: "slab-types",
+      category: "Structures",
+      prompt: "Name a type of slab.",
+      strip: ["slab"],
       tiers: {
-        lowrise: ["Enclosed", "Open", "Partially enclosed|Partially-enclosed"],
+        lowrise: ["One-way|One way", "Two-way|Two way", "Flat|Flat slab"],
         vanity: [],
-        highrise: ["Low-rise|Low rise", "Rigid", "Flexible", "Regular-shaped|Regular shaped|Regular"],
-        skyscraper: ["Simple diaphragm|Simple-diaphragm", "Components and cladding|C&C|Cladding", "Main wind-force resisting system|MWFRS|Main wind force"],
-        supertall: ["Wind-borne debris region|Windborne debris", "Free roof|Free-roof"],
-        megatall: ["Escarpment|Scarp"]
+        highrise: ["Flat plate", "Ribbed|Joist|Ribbed slab", "Waffle|Grid", "Hollow core|Hollowcore|Hollow-core", "Slab on grade|Slab-on-grade|Ground|Ground-bearing", "Cantilever", "Composite|Composite deck|Metal deck", "Post-tensioned|PT", "Precast", "Solid", "Suspended|Elevated"],
+        skyscraper: ["Drop panel|Flat slab with drop panels", "Beam and slab|Two-way with beams|Slab with beams", "Mat|Raft", "Transfer|Transfer slab", "Sunken", "Pan", "Beam and block|Block and beam|Hollow block", "Lift slab|Lift-slab", "Stepped", "Coffered"],
+        supertall: ["Filigree", "Thickened edge|Thickened slab", "Two-way joist", "Slimfloor|Slim floor|Slimdek", "Voided|Voided slab"],
+        megatall: ["BubbleDeck|Bubble deck|Bubble"]
       },
-      source: "NSCP 2015 §202 (Building: Enclosed, Flexible, Low-Rise, Open, Partially Enclosed, Regular Shaped, Rigid, Simple Diaphragm; Components and Cladding; Escarpment; Free Roof; MWFRS; Wind-borne Debris Regions), §207A–207E",
-      facts: { "Escarpment": "NSCP 2015 §202 (topographic effect, §207A.8): a cliff or steep slope that speeds the wind up, so buildings near the edge get a higher wind load." }
+      facts: { "BubbleDeck": "Hollow plastic balls replace the concrete in the middle of the slab, where it carries little load, so the slab spans far while weighing much less." }
     },
+    {
+      id: "column-types",
+      category: "Structures",
+      prompt: "Name a type of column (by shape, material or behaviour).",
+      strip: ["column"],
+      tiers: {
+        lowrise: ["Short", "Long|Slender", "Tied", "Spiral|Spirally reinforced"],
+        vanity: ["Doric", "Ionic", "Corinthian"],
+        highrise: ["Composite", "Rectangular|Square", "Circular|Round", "Intermediate", "Steel", "Timber|Wood|Wooden", "Reinforced concrete|RC|Concrete", "Axially loaded|Axial", "Eccentrically loaded|Eccentric", "Biaxial|Biaxially loaded", "Pedestal"],
+        skyscraper: ["Encased|Concrete-encased|Encased composite", "Stub", "Braced|Non-sway", "Unbraced|Sway", "Precast", "L-shaped|L-column", "Built-up", "Laced", "Battened", "Tubular|Hollow"],
+        supertall: ["Mushroom|Flared", "Tapered", "Cruciform", "Tree|Dendriform|Branching", "Lally|Pipe column", "Wind column|Wind post"],
+        megatall: ["Concrete-filled steel tube|CFST|CFT|Concrete filled tube|Concrete-filled tube"]
+      },
+      facts: { "Concrete-filled steel tube": "The steel tube confines the concrete so it can take far more load, and the concrete stops the thin tube from buckling inward: each material covers the other's weakness." }
+    },
+    {
+      id: "formwork-types",
+      category: "Construction",
+      prompt: "Name a type of formwork.",
+      strip: ["formwork", "form", "forms", "shuttering", "system"],
+      tiers: {
+        lowrise: ["Timber|Wood|Wooden", "Plywood|Phenolic", "Steel"],
+        vanity: ["Bamboo"],
+        highrise: ["Aluminum|Aluminium", "Plastic", "Slipform|Slip form|Slip-form|Sliding", "Climbing|Jump|Jumpform|Self-climbing|Climbing formwork", "Table|Flying|Table form|Flying form", "Tunnel", "Column", "Beam", "Slab|Deck", "Wall", "Permanent|Stay-in-place|Lost|Sacrificial"],
+        skyscraper: ["Insulated concrete form|ICF", "Fabric", "Waffle|Pan|Dome", "Precast", "Modular|System|Engineered", "Gang|Gang form", "Metal deck|Steel deck|Corrugated deck", "Cardboard tube|Sonotube|Tube"],
+        supertall: ["Travelling|Traveling|Traveller|Form traveller", "Form liner|Formliner", "Stripping|Drop-head|Drophead", "Tie-less|Single-sided|One-sided"],
+        megatall: ["Inflatable|Pneumatic|Balloon"]
+      },
+      facts: { "Inflatable": "A balloon is inflated into a dome shape and concrete is placed over it before it sets: Dante Bini's 'Binishell' domes were built this way." }
+    },
+    {
+      id: "water-treatment",
+      category: "Water",
+      prompt: "Name a process used in water or wastewater treatment.",
+      strip: ["process", "treatment"],
+      tiers: {
+        lowrise: ["Filtration", "Disinfection", "Chlorination", "Sedimentation|Settling"],
+        vanity: ["Boiling"],
+        highrise: ["Coagulation", "Flocculation", "Aeration", "Screening", "Softening", "UV disinfection|Ultraviolet|UV", "Ozonation|Ozone", "Reverse osmosis|RO", "Desalination", "Distillation", "Activated carbon|Adsorption|Carbon filtration", "Activated sludge"],
+        skyscraper: ["Ion exchange", "Fluoridation", "Rapid sand filtration|Rapid sand", "Slow sand filtration|Slow sand", "Clarification", "Membrane filtration|Ultrafiltration|Microfiltration|Nanofiltration", "Neutralization|pH adjustment", "Grit removal|Degritting", "Trickling filter", "Anaerobic digestion|Digestion", "Sludge dewatering|Dewatering"],
+        supertall: ["Chloramination", "Dissolved air flotation|DAF", "Electrodialysis", "Lime softening|Lime-soda", "Breakpoint chlorination", "Backwashing|Backwash", "Rapid mixing|Flash mixing|Rapid mix", "Recarbonation", "Oxidation pond|Stabilization pond|Lagoon"],
+        megatall: ["Riverbank filtration|Bank filtration"]
+      },
+      facts: { "Riverbank filtration": "Wells sunk beside a river draw water through the riverbed and banks, so the soil itself filters out much of the dirt and germs before the plant does." }
+    }
   ]
 };
