@@ -12,6 +12,32 @@
     { key: "megatall",   name: "Megatall",      m: 125, emoji: "💎", desc: "The designated gem of this prompt." }
   ];
 
+  // Effect intensity per tier (index matches TIERS). Tune the whole feel here.
+  //   hoistMs: time the answer tag travels up past the tier lines
+  //   scrim: reveal overlay darkness · particles/kind: burst size · shake px · flash {alpha, ms} · rings
+  const FX = {
+    miss:       { hoistMs: 600,  scrim: 0.35, particles: 0,   kind: null,       shake: 4,  flash: null,                 rings: 0 },
+    lowrise:    { hoistMs: 1000, scrim: 0.40, particles: 12,  kind: "dust",     shake: 0,  flash: null,                 rings: 0 },
+    vanity:     { hoistMs: 1400, scrim: 0.45, particles: 16,  kind: "dust",     shake: 2,  flash: null,                 rings: 0 },
+    highrise:   { hoistMs: 2000, scrim: 0.50, particles: 30,  kind: "spark",    shake: 3,  flash: { alpha: 0.15, ms: 120 }, rings: 0 },
+    skyscraper: { hoistMs: 2800, scrim: 0.55, particles: 60,  kind: "spark",    shake: 5,  flash: { alpha: 0.25, ms: 150 }, rings: 2 },
+    supertall:  { hoistMs: 3600, scrim: 0.60, particles: 110, kind: "confetti", shake: 7,  flash: { alpha: 0.35, ms: 180 }, rings: 3 },
+    megatall:   { hoistMs: 4600, scrim: 0.70, particles: 200, kind: "gold",     shake: 10, flash: { alpha: 0.35, ms: 400, color: "#f5b400" }, rings: 4 }
+  };
+  TIERS.forEach(t => { t.fx = FX[t.key]; });
+
+  // Altitude zones: caption + ambience while the flat tower grows.
+  const ZONES = [
+    { h: 0,    name: "Street level" },
+    { h: 50,   name: "Above the rooftops" },
+    { h: 150,  name: "Skyline" },
+    { h: 300,  name: "Supertall airspace" },
+    { h: 450,  name: "Cloud base" },
+    { h: 600,  name: "Above the clouds" },
+    { h: 828,  name: "Burj territory" },
+    { h: 1000, name: "One Kilometre Club" }
+  ];
+
   // Real-world height milestones (metres). Shown as ghost lines while building
   // and as "cleared" achievements at the end of a round.
   const MILESTONES = [
@@ -69,7 +95,10 @@
   MODULES.sort((a, b) => (a.i + a.j) - (b.i + b.j));
 
   window.SKY_CONFIG = {
-    TIERS, MILESTONES, classify, MODULE, MODULES,
+    TIERS, MILESTONES, classify, MODULE, MODULES, FX, ZONES,
+    COUNTDOWN: 3,
+    FLOOR_M: 4,
+    GEM_GOLD: "#f5b400",
     ROUND_SIZE: 8,
     TIME_LIMIT: 25,
     MAX_HEIGHT: 1000

@@ -516,15 +516,19 @@
   }
 
   window.Tower = {
+    // Lazily started on the end screen; safe to call more than once.
     init(cv, vpFn) {
-      canvas = cv; ctx = cv.getContext("2d"); viewportFn = vpFn;
+      viewportFn = vpFn;
+      if (canvas) return;
+      canvas = cv; ctx = cv.getContext("2d");
       resize(); window.addEventListener("resize", resize);
       requestAnimationFrame(render);
     },
-    setHeight(h) {
+    setHeight(h, dur) {
       from = disp; target = h; tw0 = performance.now();
-      twDur = 1500 + Math.abs(h - from) / 125 * 1700;
+      twDur = dur != null ? Math.max(1, dur) : 1500 + Math.abs(h - from) / 125 * 1700;
     },
+    jump(h) { from = target = disp = h; V = Math.max(210, h + 64) * 1.06; cx = null; },
     finish() { finishing = true; finishStart = performance.now() + 300; },
     reset() { finishing = false; fin = 0; from = disp; target = 0; disp = 0; },
     setTheme(name) { themeTarget = name === "white" ? 1 : 0; },
