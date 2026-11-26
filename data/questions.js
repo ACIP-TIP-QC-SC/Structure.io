@@ -256,13 +256,14 @@ window.SKYSCRAPER_DATA = {
       tiers: {
         lowrise: ["Tacoma Narrows Bridge|Tacoma Narrows|Galloping Gertie", "World Trade Center|Twin Towers|WTC|9/11"],
         vanity: ["Hyatt Regency walkway|Hyatt Regency|Kansas City Hyatt"],
-        highrise: ["Manila Film Center|Film Center", "Hyatt Terraces|Hyatt Terraces Baguio|Baguio Hyatt", "Ruby Tower", "Quebec Bridge|Quebec", "Tay Bridge|Tay", "Silver Bridge|Point Pleasant", "I-35W bridge|I-35W|I35W|Minneapolis bridge", "Ronan Point", "Sampoong Department Store|Sampoong", "Ponte Morandi|Morandi|Genoa bridge", "Champlain Towers South|Surfside|Champlain Towers", "Rana Plaza", "Banqiao Dam|Banqiao"],
+        highrise: ["Manila Film Center|Film Center", "Hyatt Terraces|Hyatt Terraces Baguio|Baguio Hyatt", "Ruby Tower", "Quebec Bridge|Quebec", "Tay Bridge|Tay", "Silver Bridge|Point Pleasant", "I-35W bridge|I-35W|I35W|Minneapolis bridge", "Ronan Point", "Sampoong Department Store|Sampoong", "Ponte Morandi|Morandi|Genoa bridge", "Champlain Towers South|Surfside|Champlain Towers", "Rana Plaza", "Banqiao Dam|Banqiao", "Cabagan–Santa Maria Bridge|Cabagan-Santa Maria Bridge|Cabagan Santa Maria Bridge|Cabagan–Santa Maria|Cabagan Santa Maria|Cabagan bridge|Cabagan|Santa Maria bridge|Isabela bridge|Isabella bridge|Isabela|Isabella"],
         skyscraper: ["Chuzon Supermarket|Chuzon|Porac", "Hartford Civic Center|Hartford", "Teton Dam|Teton", "St. Francis Dam|St Francis Dam|Saint Francis Dam", "Malpasset Dam|Malpasset", "Citicorp Center|Citigroup Center|Citicorp", "FIU pedestrian bridge|FIU bridge|FIU", "Vajont Dam|Vajont", "Hotel New World", "L'Ambiance Plaza|Lambiance Plaza", "Millennium Bridge|Wobbly bridge", "Kemper Arena"],
         supertall: ["Highland Towers", "West Gate Bridge|West Gate", "South Fork Dam|Johnstown Flood", "Dee Bridge|Dee", "Kings Bridge|King Street Bridge"],
         megatall: ["Sleipner A|Sleipner"]
       },
       facts: {
         "Sleipner A": "In 1991 this North Sea platform's concrete base sank after a finite-element model underestimated shear stress by about 47%: a classic lesson in checking computer output.",
+        "Cabagan–Santa Maria Bridge": "A ₱1.2-billion bridge in Isabela that collapsed on 27 Feb 2025, weeks after opening, when a dump truck several times over the load limit crossed; DPWH named overloading the main cause and also found design and construction defects.",
         "Ruby Tower": "A Binondo, Manila apartment building that collapsed in the 1968 Casiguran earthquake."
       }
     },
@@ -702,54 +703,6 @@ window.SKYSCRAPER_DATA = {
       },
       source: "NSCP 2015 §202 (ASD, LRFD, Strength Design), §207F (wind tunnel procedure), §402.3 (Strut-and-Tie Model, Finite Element Analysis), §423, §429 (Alternate Design Method), Ch5 glossary + App. A-7 (Direct Analysis Method, Direct Strength Method, Effective Length, Performance-based Design, Prescriptive Design, Rational Engineering Analysis)",
       facts: { "Direct analysis method": "NSCP 2015 Ch5 App. A-7: model the frame's imperfections and reduced stiffness directly, and the K-factor tables are no longer needed." }
-    },
-    {
-      id: "nscp-masonry",
-      category: "NSCP 2015",
-      prompt: "Name a part or term of masonry construction (CHB walls included).",
-      strip: ["masonry"],
-      tiers: {
-        lowrise: ["Mortar", "Hollow block|CHB|Concrete hollow block|Hollow masonry unit|Hollow-masonry unit", "Grout"],
-        vanity: [],
-        highrise: ["Brick|Solid masonry unit|Solid-masonry unit", "Bed joint|Bed", "Head joint|Head", "Bond beam", "Reinforced masonry|Reinforced", "Wall tie|Tie", "Cell|Core", "Lintel", "Cavity wall|Cavity", "Masonry unit|Unit"],
-        skyscraper: ["Wythe", "Collar joint", "Shell|Face shell", "Web", "Prism", "Grout lift|Lift", "Grout pour|Pour", "Bonded wall|Bonded", "Pilaster", "Weep hole|Weephole"],
-        supertall: ["Mortarless|Mortarless masonry|Dry-stack", "Grouted multi-wythe|Multi-wythe", "Transformed area", "Bedded area", "Unreinforced|URM"],
-        megatall: ["Cleanout|Clean-out"]
-      },
-      source: "NSCP 2015 Ch7 definitions (Bond Beam, Cell, Cleanout, Collar Joint, Grout Lift, Grout Pour, Grouted Hollow-Unit Masonry, Grouted Multi-Wythe Masonry, Hollow-Masonry Unit, Joint Bed/Head, Masonry Unit, Mortarless Masonry System, Prism, Reinforced Masonry, Shell, Solid-Masonry Unit, Wall Tie, Wall Bonded/Cavity, Wythe); §202 WYTHE",
-      facts: { "Cleanout": "NSCP 2015 Ch7: an opening left at the bottom of a grout space so mortar droppings can be removed before the grout goes in." }
-    },
-    {
-      id: "nscp-wood-products",
-      category: "NSCP 2015",
-      prompt: "Name a wood or wood-based structural product.",
-      strip: ["wood", "timber"],
-      tiers: {
-        lowrise: ["Lumber|Sawn lumber|Solid sawn", "Plywood", "Coco lumber|Coconut lumber|Coconut"],
-        vanity: ["Bamboo"],
-        highrise: ["Glulam|Glued-laminated|Glued laminated|Structural glued-laminated", "Particleboard|Particle board|Chipboard", "Fiberboard|Fibreboard|MDF", "Hardboard", "Treated|Pressure-treated|Treated wood", "Wood structural panel|Structural panel", "OSB|Oriented strand board", "Pole|Poles|Pile"],
-        skyscraper: ["Machine-graded lumber|MGL|Machine graded", "Glued built-up|Built-up|Built up", "Fire-retardant-treated|Fire retardant treated|FRT", "LVL|Laminated veneer lumber", "CLT|Cross-laminated timber|Cross laminated", "I-joist|I joist|Wood I-joist", "Metal plate-connected truss|Truss|Gang-nail"],
-        supertall: ["Sheathing", "Siding", "Decking|Plank", "Dressed lumber|S4S|Dressed", "Rough lumber|Rough-sawn", "Wood of natural resistance to decay|Naturally durable|Decay-resistant|Termite-resistant"],
-        megatall: ["End-jointed|Finger-jointed|Finger jointed|Finger joint"]
-      },
-      source: "NSCP 2015 §202 (Fiberboard, Glued Built-up Members, Hardboard, Machine-Graded Lumber, Particleboard, Plywood, Structural Glued-Laminated Timber, Treated Wood, Wood of Natural Resistance to Decay or Termites, Wood Structural Panel; FPRDI), §603",
-      facts: { "End-jointed": "Short offcuts are glued end to end with interlocking 'fingers' into long boards. NSCP 2015 §603.2 lets approved end-jointed lumber stand in for solid sawn lumber of the same grade." }
-    },
-    {
-      id: "nscp-earthworks",
-      category: "NSCP 2015",
-      prompt: "Name an earthwork or site-grading term.",
-      strip: [],
-      tiers: {
-        lowrise: ["Excavation|Excavate", "Fill|Backfill", "Compaction|Compact"],
-        vanity: [],
-        highrise: ["Grading|Grade", "Slope", "Erosion", "Bedrock", "Borrow|Borrow pit", "Cut|Cut and fill", "Embankment", "Topsoil|Stripping", "Finish grade|Finished grade", "Existing grade|Natural grade"],
-        skyscraper: ["Bench|Benching", "Terrace", "Rough grade", "Earth material", "Subgrade", "Shoring|Sheeting|Bracing", "Dewatering", "Setback", "Spoil"],
-        supertall: ["As graded", "Swell|Bulking", "Shrinkage factor", "Toe", "Crest"],
-        megatall: ["Key"]
-      },
-      source: "NSCP 2015 §102 (As Graded, Bedrock, Bench, Borrow, Compaction, Earth Material, Erosion, Excavation, Existing Grade, Fill, Finish Grade, Grade, Grading, Key, Rough Grade, Slope, Soil, Terrace), §302",
-      facts: { "Key": "NSCP 2015 §102: a compacted-fill trench dug under the toe of a fill slope that locks the whole slope into the ground." }
     },
 
     /* ---- simple "name a type of …" prompts added after member feedback ---- */

@@ -107,8 +107,8 @@ window.SKYSCRAPER_EXPANSIONS = {
 
   /* ===================== BRIDGES IN THE PHILIPPINES ===================== */
   "ph-bridges": {
-    skyscraper: ["Pandacan", "Quirino Bridge|Banaoang", "Biliran", "Diosdado Macapagal|Macapagal Bridge Butuan", "Puente de España|Puente Grande"],
-    supertall: ["Ysalina", "Kalayaan Bridge", "Mabini Bridge"]
+    skyscraper: ["Pandacan", "Quirino Bridge|Banaoang", "Biliran", "Diosdado Macapagal|Macapagal Bridge Butuan", "Puente de España|Puente Grande", "Cabagan–Santa Maria|Cabagan Santa Maria|Cabagan-Santa Maria|Cabagan|Santa Maria Isabela"],
+    supertall: ["Old Clarin|Clarin|Loay–Clarin|Loay Clarin", "Ysalina", "Kalayaan Bridge", "Mabini Bridge"]
   },
 
   /* ===================== REAL DAMS (world + Philippines) ===================== */
@@ -165,7 +165,7 @@ window.SKYSCRAPER_EXPANSIONS = {
       "Big Dig ceiling|Big Dig", "Sunshine Skyway 1980|Sunshine Skyway", "Kinzua Bridge|Kinzua", "Mianus River Bridge|Mianus",
       "Schoharie Creek Bridge|Schoharie", "Royal Plaza Hotel|Royal Plaza", "Terminal 2E|CDG Terminal 2E|Charles de Gaulle Terminal 2E",
       "Christian College of the Philippines|Cabanatuan school", "Nevada Hotel|Baguio Nevada Hotel", "Magsaysay Bridge Dagupan|Magsaysay Bridge",
-      "Cherry Hills|Cherry Hills Subdivision", "Loon Church|Loboc Church", "Baldwin Hills Dam|Baldwin Hills", "Kelly Barnes Dam|Toccoa Falls"
+      "Cherry Hills|Cherry Hills Subdivision", "Clarin Bridge|Old Clarin Bridge|Loay–Clarin Bridge|Loay Clarin|Bohol bridge|Clarin", "Payatas dumpsite|Payatas landslide|Payatas trash slide|Payatas", "Loon Church|Loboc Church", "Baldwin Hills Dam|Baldwin Hills", "Kelly Barnes Dam|Toccoa Falls"
     ],
     supertall: [
       "Great Molasses Flood|Boston Molasses|Molasses", "Knickerbocker Theatre|Knickerbocker", "Ynys-y-Gwas", "Ashtabula River Railroad|Ashtabula",
