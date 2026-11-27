@@ -63,6 +63,7 @@ for (const q of data.questions) {
   for (let a = 0; a < keys.length; a++) for (let b = a + 1; b < keys.length; b++) {
     const [ka, ea] = keys[a], [kb, eb] = keys[b];
     if (ea === eb || ea.tier === eb.tier) continue;
+    if (ka.replace(/\D+/g, "") !== kb.replace(/\D+/g, "")) continue;   // the matcher never treats a different number as a typo
     const tol = Math.min(M.tolerance(ka.length), M.tolerance(kb.length));
     if (tol && M.lev(ka, kb, tol) <= tol) {
       if (!quiet) console.log(`WARN   ${q.id}: "${ka}" (${ea.tier}) ≈ "${kb}" (${eb.tier}) — typo tolerance may confuse them`);

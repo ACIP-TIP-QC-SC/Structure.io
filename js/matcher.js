@@ -30,6 +30,19 @@
     return ws;
   }
   function key(s, strip) { return words(s, strip).join(""); }
+  // Prompts flagged numeric (rebar sizes…) get their numbers tidied before matching:
+  // "10mm" → "10 mm", "Ø10" → "10", 3/8" → "3f8 in", "1-1/8" → "1 1f8", "#4" / "No. 4" / "bar 4" → "n4"
+  // (fractions become one token so 1/4 can't collide with 14 mm, and bar numbers can't collide with mm sizes).
+  function prep(s, q) {
+    s = String(s == null ? "" : s);
+    if (!q || !q.numeric) return s;
+    return s.replace(/[øØ⌀φΦ]/g, " ").replace(/[″”"]/g, " in ")
+      .replace(/(\d)\s*-\s*(\d+\s*\/)/g, "$1 $2")
+      .replace(/(\d)([a-z])/gi, "$1 $2").replace(/([a-z])(\d)/gi, "$1 $2")
+      .replace(/(\d+)\s*\/\s*(\d+)/g, " $1f$2 ")
+      .replace(/(?:#|\bno\.?|\bnum(?:ber)?\.?|\bbar)\s*(\d+)\b(?!\s*\/)/gi, " n$1 ");
+  }
+  const digits = s => s.replace(/\D+/g, "");
   function tolerance(len) {
     if (len <= 4) return 0;
     if (len <= 7) return 1;
@@ -60,8 +73,8 @@
     for (const tier of TIER_ORDER) {
       for (const entry of (q.tiers && q.tiers[tier]) || []) {
         const aliases = String(entry).split("|").map(a => a.trim()).filter(Boolean);
-        bank.push({ display: aliases[0], tier, aliases, keys: [...new Set(aliases.map(a => key(a, strip)).filter(Boolean))],
-          toks: aliases.map(a => words(a, strip)).filter(t => t.length) });
+        bank.push({ display: aliases[0], tier, aliases, keys: [...new Set(aliases.map(a => key(prep(a, q), strip)).filter(Boolean))],
+          toks: aliases.map(a => words(prep(a, q), strip)).filter(t => t.length) });
       }
     }
     // "Generic" words: qualifiers that don't pick out one answer on their own. They may be
@@ -113,7 +126,8 @@
     if (!q._bank) q._bank = buildBank(q);
     const { strip, bank, generic, droppable, vocab } = q._bank;
     // fix typos in filler words first, so "rigid pavment" strips like "rigid pavement"
-    input = norm(input || "").split(" ").map(w => {
+    const raw = words(norm(prep(input, q)), strip);
+    input = norm(prep(input, q)).split(" ").map(w => {
       const s = singular(w);
       if (droppable.has(s) || s.length < 6 || vocab.has(s)) return w;
       for (const g of droppable) if (g.length >= 6 && lev(s, g, 1) <= 1) return g;
@@ -121,12 +135,16 @@
     }).join(" ");
     const k = key(input, strip);
     if (!k) return null;
+    for (const e of bank) if (e.keys.includes(k)) return { entry: e, distance: 0, how: "exact" };
+    // a typo match needs something specific: "development" alone must not typo-match "SM Development"
+    const allGeneric = raw.every(w => droppable.has(w));
     let best = null, bestD = Infinity;
-    for (const e of bank) {
+    const kd = digits(k);
+    for (const e of allGeneric ? [] : bank) {
       for (const ek of e.keys) {
-        if (ek === k) return { entry: e, distance: 0, how: "exact" };
         const tol = tolerance(ek.length);
-        if (!tol) continue;
+        // a number the player typed is never a typo: ACI 318 ≠ ACI 314, 12 mm ≠ 16 mm (leaving the number off is fine)
+        if (!tol || (kd && digits(ek) !== kd)) continue;
         const d = lev(k, ek, tol);
         if (d <= tol && d < bestD) { best = e; bestD = d; }
       }
@@ -181,10 +199,10 @@
       if (!ext) continue;
       const strip = new Set((q.strip || []).map(w => singular(norm(w))));
       const taken = new Set();
-      for (const t of TIER_ORDER) for (const e of (q.tiers[t] || [])) for (const a of String(e).split("|")) taken.add(key(a, strip));
+      for (const t of TIER_ORDER) for (const e of (q.tiers[t] || [])) for (const a of String(e).split("|")) taken.add(key(prep(a, q), strip));
       for (const t of TIER_ORDER) {
         for (const e of ext[t] || []) {
-          const keys = String(e).split("|").map(a => key(a, strip)).filter(Boolean);
+          const keys = String(e).split("|").map(a => key(prep(a, q), strip)).filter(Boolean);
           if (!keys.length || keys.some(k => taken.has(k))) { skipped++; continue; }
           keys.forEach(k => taken.add(k));
           (q.tiers[t] = q.tiers[t] || []).push(e);
@@ -196,7 +214,7 @@
     return { added, skipped };
   }
 
-  const api = { TIER_ORDER, norm, key, words, buildBank, match, analyze, lev, tolerance, applyExpansions };
+  const api = { TIER_ORDER, norm, key, words, prep, buildBank, match, analyze, lev, tolerance, applyExpansions };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.SkyMatcher = api;
 })(this);
