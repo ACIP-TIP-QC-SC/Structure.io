@@ -18,6 +18,8 @@ The v2 engine rework from `HANDOFF_engine_rework.md` (written by the ACI Website
 |---|---|
 | Phases `intro → countdown → question → hoist → reveal → … → topping → end` on `body[data-phase]` | `js/game.js` |
 | 3 s read-then-countdown (Enter skips) | `showCountdown()` |
+| Retry mechanic (Krillion-style): a rejected answer shows a cue, clears the box and is listed as a struck-through chip; the player keeps trying until one is accepted or 25 s runs out. Repeats get "Already tried"; a partial name that fits several answers gets "Be more specific". A timeout reveal shows 3 answers that would have worked | `submit()` / `reject()` in `js/game.js` |
+| Forgiving matcher, no AI: case/accents/punctuation, plurals, typos, then extra generic words ("pervious concrete" → Pervious) and dropped generic words ("St Francis" → St. Francis Dam). Generic = words in the prompt, `strip` words, a short global list, and words shared by 3+ answers of the prompt. Specific extra words are refused ("London bridge" ≠ Bridge crane) | `SkyMatcher.analyze()` in `js/matcher.js` |
 | Hoist: the answer rides the crane hook past the tier lines, with time scaled by rarity (0.6–4.6 s) | `Fx.hoist()` in `js/fx.js`, times in `CFG.FX` |
 | Full-screen reveal on every answer, with intensity from `TIERS[i].fx`; gold is reserved for the gem | `showReveal()`; `.reveal*` CSS |
 | No "other answers" list and no gem spoiler on the end screen | removed |

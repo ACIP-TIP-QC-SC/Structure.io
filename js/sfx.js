@@ -85,6 +85,7 @@
     },
     trap() { tone({ type: "sawtooth", f0: 440, f1: 400, d: 0.14, peak: 0.12, filter: { type: "lowpass", f0: 2400, f1: 700 } }); tone({ type: "sawtooth", f0: 340, f1: 300, t: 0.16, d: 0.28, peak: 0.12, filter: { type: "lowpass", f0: 1800, f1: 400 } }); },
     miss() { noise({ d: 0.04, type: "highpass", f: 3000, peak: 0.35 }); tone({ f0: 300, f1: 80, t: 0.03, d: 0.5, peak: 0.3 }); },
+    nope() { tone({ type: "square", f0: 220, f1: 180, d: 0.09, peak: 0.1, filter: { type: "lowpass", f0: 1400 } }); tone({ type: "square", f0: 165, t: 0.1, d: 0.12, peak: 0.1, filter: { type: "lowpass", f0: 1200 } }); },
     tick() { tone({ f0: 1600, d: 0.02, peak: 0.05 }); },
     clank() { [310, 523, 1170].forEach(f => tone({ f0: jit(f, 0.08), a: 0.002, d: 0.12, peak: 0.07 })); noise({ d: 0.05, f: 2500, q: 2, peak: 0.05 }); },
     whir() { tone({ type: "sawtooth", f0: 90, f1: 140, d: 0.5, peak: 0.08, filter: { type: "lowpass", f0: 600 } }); },

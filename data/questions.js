@@ -617,7 +617,7 @@ window.SKYSCRAPER_DATA = {
         lowrise: ["Asphalt|Bituminous|Blacktop", "Concrete|PCCP|Portland cement concrete", "Gravel"],
         vanity: [],
         highrise: ["Flexible", "Rigid", "Composite", "Cobblestone|Cobble", "Paver|Pavers|Paving blocks|Interlocking", "Earth|Dirt|Unpaved", "Hot mix asphalt|HMA", "Jointed plain concrete|JPCP|Jointed"],
-        skyscraper: ["Continuously reinforced|CRCP", "Porous asphalt|Permeable|Pervious", "Macadam|Water-bound macadam", "Chip seal|Surface treatment|Seal coat", "Brick", "Cold mix asphalt|Cold mix", "Overlay"],
+        skyscraper: ["Continuously reinforced|CRCP", "Porous asphalt|Permeable|Pervious|Pervious concrete|Porous concrete|Permeable pavers", "Macadam|Water-bound macadam", "Chip seal|Surface treatment|Seal coat", "Brick", "Cold mix asphalt|Cold mix", "Overlay"],
         supertall: ["Tarmacadam|Tarmac", "Stone mastic asphalt|SMA", "Prestressed", "Roller-compacted|RCC", "Slurry seal"],
         megatall: ["Corduroy"]
       },
