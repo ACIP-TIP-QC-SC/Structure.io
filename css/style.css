@@ -17,9 +17,14 @@
   --top-h: 60px;
 }
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+/* Lock the page: nothing may scroll or rubber-band (iOS keyboard pan bug). js/viewport.js keeps it pinned. */
+html, body {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  overflow: hidden; overscroll-behavior: none;
+}
+html { background: #0047ab; }
 body {
-  margin: 0; overflow: hidden;
+  margin: 0;
   font-family: var(--display); color: var(--cobalt-ink);
   background: var(--white);
   -webkit-font-smoothing: antialiased;
@@ -285,6 +290,12 @@ form.shake { animation: shake 0.3s; }
     max-height: none; height: min(56vh, 470px);
   }
   #intro { height: min(66vh, 600px); }
+  /* keyboard open: card rides on top of the keyboard and shrinks to fit what's visible */
+  .panel { bottom: var(--kb, 0px); transition: bottom 0.12s ease-out; }
+  html.kb-open .panel {
+    height: auto; max-height: calc(var(--app-h, 100%) - var(--top-h) - 6px);
+    padding-bottom: 12px; border-radius: 16px 16px 0 0;
+  }
   h1 { font-size: 23px; margin-top: 6px; }
   .lede { font-size: 14px; }
   .steps { display: none; }
@@ -439,3 +450,9 @@ body[data-phase="reveal"] #card, body[data-phase="topping"] #card { padding: 14p
 }
 #intro .intro-logo { display: block; width: auto; height: 120px; margin: -6px auto 14px; }
 @media (max-width: 899px) { #intro .intro-logo { height: 96px; } }
+
+/* tablets/desktop with an on-screen keyboard: keep the card inside the visible area */
+html.kb-open .panel .hint { display: none; }
+@media (min-width: 900px) {
+  html.kb-open .panel:not(#intro) { max-height: calc(var(--app-h, 100%) - var(--top-h) - 24px); }
+}
