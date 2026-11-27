@@ -398,8 +398,8 @@ window.SKYSCRAPER_DATA = {
         lowrise: ["Pascal|Pa", "psi|Pounds per square inch", "Megapascal|MPa"],
         vanity: ["Torr"],
         highrise: ["Kilopascal|kPa", "Bar", "Atmosphere|atm", "Millimetre of mercury|mmHg|Millimeter of mercury", "Newton per square metre|N/m2|N/m²|Newton per square meter", "Gigapascal|GPa", "Kilonewton per square metre|kN/m2|kN/m²|Kilonewton per square meter", "ksi|Kip per square inch|Kips per square inch"],
-        skyscraper: ["Newton per square millimetre|N/mm2|N/mm²|Newton per square millimeter", "psf|Pounds per square foot", "Kilogram-force per square centimetre|kgf/cm2|kg/cm2|ksc|Kilogram per square centimeter", "Hectopascal|hPa", "Millibar|mbar", "Inch of mercury|inHg"],
-        supertall: ["ksf|Kips per square foot", "Tons per square foot|tsf", "Tonne per square metre|t/m2|Ton per square meter", "Technical atmosphere|at"],
+        skyscraper: ["Newton per square millimetre|N/mm2|N/mm²|Newton per square millimeter", "psf|Pounds per square foot", "Kilogram-force per square centimetre|kgf/cm2|kg/cm2|ksc|Kilogram per square centimeter", "Hectopascal|hPa", "Millibar|mbar", "Inch of mercury|inHg", "Kilogram per square metre|kg/m2|kgf/m2|Kilogram per square meter", "Inch of water|inH2O", "Millimetre of water|mmH2O|Millimeter of water", "psig|psia|Gauge psi"],
+        supertall: ["ksf|Kips per square foot", "Tons per square foot|tsf", "Tonne per square metre|t/m2|Ton per square meter", "Technical atmosphere|at", "Barye", "Pieze", "Kilobar|kbar", "Microbar", "Centimetre of water|cmH2O|Centimeter of water"],
         megatall: ["Metre of water|mH2O|Meter of water|Feet of head|Foot of water|Head"]
       },
       facts: { "Metre of water": "Pressure written as the height of a water column: 10 m of water is roughly one atmosphere. Hydraulics engineers still say 'head'." }
@@ -415,8 +415,8 @@ window.SKYSCRAPER_DATA = {
         lowrise: ["Celsius|°C|C|Centigrade", "Fahrenheit|°F|F", "Kelvin|K"],
         vanity: [],
         highrise: ["Rankine|°R|R"],
-        skyscraper: ["Réaumur|Reaumur|°Ré|Re", "Millikelvin|mK"],
-        supertall: ["Delisle|°De|De", "Newton|°N|N", "Planck temperature|Planck"],
+        skyscraper: ["Réaumur|Reaumur|°Ré|Re", "Millikelvin|mK", "Gas mark|Regulo", "Microkelvin|Nanokelvin"],
+        supertall: ["Delisle|°De|De", "Newton|°N|N", "Planck temperature|Planck", "Wedgwood", "Leiden", "Électronvolt temperature|Electronvolt temperature"],
         megatall: ["Rømer|Romer|Roemer|°Rø"]
       },
       facts: { "Rømer": "Danish astronomer Ole Rømer's 1701 scale put brine's freezing point at 0 and water's boiling point at 60; Fahrenheit visited him and built his own scale from it." }
@@ -428,13 +428,13 @@ window.SKYSCRAPER_DATA = {
       strip: [],
       tiers: {
         lowrise: ["Metre|Meter|m", "Centimetre|Centimeter|cm", "Millimetre|Millimeter|mm", "Kilometre|Kilometer|km", "Inch|Inches|in", "Foot|Feet|ft"],
-        vanity: ["Light-year|Light year|ly"],
-        highrise: ["Yard|yd", "Mile|mi", "Micrometre|Micrometer|Micron|um", "Nanometre|Nanometer|nm", "Nautical mile|nmi", "Decimetre|Decimeter|dm"],
-        skyscraper: ["Chain|Gunter's chain|Gunters chain|Surveyor's chain", "Rod|Pole|Perch", "Furlong", "Fathom", "Ångström|Angstrom|Å", "Mil|Thou", "Astronomical unit|AU", "League", "Hand", "Dangkal"],
-        supertall: ["Link|Gunter's link", "Cubit", "Parsec|pc", "Span", "Picometre|Picometer|pm", "Station"],
+        vanity: ["Light-year|Light year|ly", "Knot|Knots|kn|kt"],
+        highrise: ["Yard|yd", "Mile|mi", "Micrometre|Micrometer|Micron|um", "Nanometre|Nanometer|nm", "Nautical mile|nmi", "Decimetre|Decimeter|dm", "Pace|Paces|Step|Steps", "Hectometre|Hectometer|hm", "Decametre|Decameter|Dekameter|Dekametre|dam", "Statute mile|Land mile|International mile"],
+        skyscraper: ["Chain|Gunter's chain|Gunters chain|Surveyor's chain", "Rod|Pole|Perch", "Furlong", "Fathom", "Ångström|Angstrom|Å", "Mil|Thou", "Astronomical unit|AU", "League", "Hand", "Dangkal", "Palm", "Talampakan", "Pulgada", "Megametre|Megameter", "Femtometre|Femtometer|Fermi|fm", "Light-second|Light second|Light-minute|Light minute", "Klick|Click", "Point|pt", "Pica", "US survey foot|Survey foot"],
+        supertall: ["Link|Gunter's link", "Cubit", "Parsec|pc", "Span", "Picometre|Picometer|pm", "Station", "Dipa", "Ell", "Barleycorn", "Digit|Finger", "Cable length|Cable", "Planck length", "Roman mile|Mille passus|Mille", "Stadion|Stadium|Stade", "Li|Chinese mile", "Shaku", "Ken", "Chi|Chinese foot", "Verst|Versta", "Arpent", "Braza", "Gigametre|Gigameter|Gm", "Smoot", "Mile (Scandinavian)|Scandinavian mile|Swedish mil|Norwegian mil"],
         megatall: ["Vara|Spanish vara"]
       },
-      facts: {
+      facts: { "Pace": "A Roman pace (passus) was two steps, about 1.48 m. A thousand of them, mille passus, gave us the word mile.", "Knot": "A knot is a speed, one nautical mile per hour. The length behind it is the nautical mile (1,852 m), so it scores only as a Vanity answer.",
         "Vara": "The Spanish vara (about 0.84 m) still turns up on old Philippine land titles and survey plans, so surveyors here have to convert it.",
         "Dangkal": "The Filipino hand-span, thumb tip to little-finger tip: a body measure still used informally on site."
       }
@@ -446,13 +446,13 @@ window.SKYSCRAPER_DATA = {
       strip: [],
       tiers: {
         lowrise: ["Newton|N", "Kilonewton|kN", "Pound|Pound-force|lb|lbf"],
-        vanity: [],
-        highrise: ["Kip|Kips|Kilopound", "Kilogram-force|kgf|Kilopond|kp", "Dyne|dyn", "Tonne-force|Ton-force|tf|Metric ton-force", "Meganewton"],
-        skyscraper: ["Poundal|pdl", "Gram-force|gf", "Millinewton"],
-        supertall: ["Ounce-force|ozf"],
+        vanity: ["Kilogram|kg|Kilo"],
+        highrise: ["Kip|Kips|Kilopound", "Kilogram-force|kgf|Kilopond|kp", "Dyne|dyn", "Tonne-force|Ton-force|tf|Metric ton-force|Ton|Tonne", "Meganewton"],
+        skyscraper: ["Poundal|pdl", "Gram-force|gf", "Millinewton", "Decanewton|daN", "Giganewton|GN", "Short ton-force|US ton-force", "Kip-force|klbf"],
+        supertall: ["Ounce-force|ozf", "Micronewton", "Long ton-force", "Kilodyne"],
         megatall: ["Sthène|Sthene|sn"]
       },
-      facts: { "Sthène": "The force unit of France's old metre–tonne–second system: one sthène pushes one tonne to 1 m/s², which is exactly 1 kN." }
+      facts: { "Kilogram": "Strictly a kilogram is mass; the force is the kilogram-force (about 9.81 N). Everyone on site still says 'kilos' for loads, so it gets Vanity points.", "Sthène": "The force unit of France's old metre–tonne–second system: one sthène pushes one tonne to 1 m/s², which is exactly 1 kN." }
     },
     {
       id: "energy-units",
@@ -462,9 +462,9 @@ window.SKYSCRAPER_DATA = {
       tiers: {
         lowrise: ["Joule|J", "Calorie|cal", "Kilowatt-hour|kWh|Kilowatt hour"],
         vanity: [],
-        highrise: ["Kilojoule|kJ", "Kilocalorie|kcal|Food calorie", "British thermal unit|BTU", "Electronvolt|Electron volt|eV", "Megajoule|MJ", "Watt-hour|Watt hour|Wh", "Erg", "Newton-metre|Newton meter|N·m|N-m", "Foot-pound|Foot pound|ft-lb|ft·lbf"],
-        skyscraper: ["Therm", "Ton of TNT|TNT equivalent|Kiloton|Megaton", "Megawatt-hour|MWh", "Gigajoule|GJ", "Horsepower-hour|hp·h|hp-h", "Gigawatt-hour|GWh", "Inch-pound|in-lb"],
-        supertall: ["Tonne of oil equivalent|toe", "Barrel of oil equivalent|BOE", "Quad", "Hartree", "Rydberg"],
+        highrise: ["Kilojoule|kJ", "Kilocalorie|kcal|Food calorie", "British thermal unit|BTU", "Electronvolt|Electron volt|eV", "Megajoule|MJ", "Watt-hour|Watt hour|Wh", "Erg", "Newton-metre|Newton meter|N·m|N-m", "Foot-pound|Foot pound|ft-lb|ft·lbf", "Kilonewton-metre|kN·m|kN-m|kNm|Kilonewton meter"],
+        skyscraper: ["Therm", "Ton of TNT|TNT equivalent|Kiloton|Megaton", "Megawatt-hour|MWh", "Gigajoule|GJ", "Horsepower-hour|hp·h|hp-h", "Gigawatt-hour|GWh", "Inch-pound|in-lb", "Terajoule|TJ", "Millijoule", "Watt-second|Ws|Watt second", "Kilogram-metre|kgf·m|kg-m|Kilogram-force metre|Kilogram meter", "Litre-atmosphere|Liter-atmosphere|L·atm|L-atm", "Kip-foot|kip-ft|Kip-inch|kip-in"],
+        supertall: ["Tonne of oil equivalent|toe", "Barrel of oil equivalent|BOE", "Quad", "Hartree", "Rydberg", "Petajoule|PJ", "Exajoule|EJ", "Microjoule", "Thermie", "Foot-poundal|ft-pdl"],
         megatall: ["Foe|Bethe"]
       },
       facts: { "Foe": "Short for 'ten to the fifty-one ergs' (10^44 J): astronomers use it to measure the energy of a supernova." }
@@ -477,9 +477,9 @@ window.SKYSCRAPER_DATA = {
       tiers: {
         lowrise: ["Litre|Liter|L", "Cubic metre|Cubic meter|m3|cu m|cu.m", "Millilitre|Milliliter|mL|cc|Cubic centimetre|Cubic centimeter|cm3"],
         vanity: [],
-        highrise: ["Gallon|gal", "Cubic foot|Cubic feet|ft3|cu ft", "Board foot|Board feet|bd ft|BF", "Cubic yard|yd3|cu yd", "Cubic inch|in3|cu in", "Barrel|bbl", "Fluid ounce|fl oz", "Quart|qt", "Pint|pt", "Cup", "Cubic millimetre|Cubic millimeter|mm3"],
-        skyscraper: ["Hectolitre|Hectoliter|hL", "Kilolitre|Kiloliter|kL", "Cord", "Million gallons|MG", "Tablespoon|tbsp", "Teaspoon|tsp", "Bushel"],
-        supertall: ["Stere|Stère", "Gill", "Minim", "Hogshead", "Peck"],
+        highrise: ["Gallon|gal", "Cubic foot|Cubic feet|ft3|cu ft", "Board foot|Board feet|bd ft|BF", "Cubic yard|yd3|cu yd", "Cubic inch|in3|cu in", "Barrel|bbl", "Fluid ounce|fl oz", "Quart|qt", "Pint|pt", "Cup", "Cubic millimetre|Cubic millimeter|mm3", "Drum|Drums|Oil drum"],
+        skyscraper: ["Hectolitre|Hectoliter|hL", "Kilolitre|Kiloliter|kL", "Cord", "Million gallons|MG", "Tablespoon|tbsp", "Teaspoon|tsp", "Bushel", "Cubic decimetre|Cubic decimeter|dm3", "Decilitre|Deciliter|dL", "Centilitre|Centiliter|cL", "Microlitre|Microliter", "Cubic kilometre|Cubic kilometer|km3", "US gallon|Imperial gallon"],
+        supertall: ["Stere|Stère", "Gill", "Minim", "Hogshead", "Peck", "Cavan|Kaban", "Ganta|Salop|Gatang", "Chupa", "Acre-inch", "Register ton|Gross register ton|Gross ton"],
         megatall: ["Acre-foot|Acre-feet|Acre foot|ac-ft"]
       },
       facts: { "Acre-foot": "The water that covers one acre one foot deep, about 1,233 m³. Dam and irrigation engineers in the US still size reservoirs in acre-feet." }
@@ -493,8 +493,8 @@ window.SKYSCRAPER_DATA = {
         lowrise: ["Kilogram|kg|Kilo", "Gram|g", "Pound|lb|lbs", "Tonne|Metric ton|t|Ton"],
         vanity: [],
         highrise: ["Milligram|mg", "Ounce|oz", "Slug", "Short ton|US ton", "Long ton|Imperial ton", "Microgram|mcg", "Carat|ct", "Stone|st"],
-        skyscraper: ["Grain|gr", "Quintal", "Atomic mass unit|amu|Dalton|Da", "Hundredweight|cwt", "Troy ounce|ozt", "Megagram", "Pennyweight|dwt"],
-        supertall: ["Catty|Kati|Chin", "Tael", "Arroba", "Kip-mass"],
+        skyscraper: ["Grain|gr", "Quintal", "Atomic mass unit|amu|Dalton|Da", "Hundredweight|cwt", "Troy ounce|ozt", "Megagram", "Pennyweight|dwt", "Kilotonne|Kiloton|kt", "Centigram|cg", "Decagram|Dekagram|dag", "Hectogram|hg", "Nanogram|ng", "Sack|Bag of cement|Cement bag"],
+        supertall: ["Catty|Kati|Chin", "Tael", "Arroba", "Kip-mass", "Megatonne|Megaton|Mt", "Picogram|pg", "Solar mass", "Earth mass", "Planck mass", "Cavan|Kaban", "Libra|Spanish pound", "Onza"],
         megatall: ["Picul|Pikul|Pico"]
       },
       facts: { "Picul": "A 'shoulder load' of about 63 kg. Philippine sugar output was reported in piculs for generations, and Spanish records wrote it 'pico'." }
