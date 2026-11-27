@@ -318,8 +318,8 @@
     $("#summary").innerHTML = `
       <div class="sum-eyebrow mono">TOPPED OUT · ${new Date().toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })}</div>
       <div class="sum-height"><span id="sumNum">0</span><small>m</small></div>
-      <div class="sum-class">${esc(CFG.classify(h))} <span class="mono">· ${Math.round(h / MAX_HEIGHT * 100)}% of 1 km</span></div>
-      <div class="sum-best">${best ? `Taller than <b>${esc(best.name)}</b> (${best.h} m)` : "Not taller than any landmark yet"}${nextM ? `<br><span>Next: ${esc(nextM.name)}, ${nextM.h - h} m higher</span>` : "<br><span>A full kilometre. Welcome to the One Kilometre Club.</span>"}</div>
+      <div class="sum-class"><span class="cls cls-${CFG.classify(h).toLowerCase().replace(/[^a-z]+/g, "")}">${esc(CFG.classify(h))}</span> <span class="mono">· ${Math.round(h / MAX_HEIGHT * 100)}% of 1 km</span></div>
+      <div class="sum-best">${best ? `<mark class="sum-mark">Taller than <b>${esc(best.name)}</b> (${best.h} m)</mark>` : "Not taller than any landmark yet"}${nextM ? `<br><span>Next: ${esc(nextM.name)}, ${nextM.h - h} m higher</span>` : "<br><span>A full kilometre. Welcome to the One Kilometre Club.</span>"}</div>
       <div class="sum-actions">
         <button class="btn primary" id="againBtn">Build again</button>
         <button class="btn ghost" id="shareBtn">Share result</button>

@@ -253,6 +253,20 @@ form.shake { animation: shake 0.3s; }
 .sum-class .mono { font-size: 12.5px; font-weight: 500; color: #6a7a99; }
 .sum-best { margin: 10px 0 16px; font-size: 14px; color: #33456b; line-height: 1.5; }
 .sum-best span { color: #6a7a99; font-size: 13px; }
+/* Final tier label: plainer for low tiers, glowing for the top two. */
+.sum-class .cls { display: inline-block; }
+.cls-vacantlot { color: #8a96ad; }
+.cls-lowrise { color: #5d6b85; }
+.cls-highrise { color: #1f8a5b; }
+.cls-skyscraper { color: #0047ab; text-shadow: 0 0 8px rgba(0, 71, 171, 0.25); }
+.cls-supertall { color: #e8710a; font-weight: 800; text-shadow: 0 0 6px rgba(255, 140, 0, 0.55), 0 0 16px rgba(255, 140, 0, 0.35); animation: clsGlowO 2.4s ease-in-out infinite; }
+.cls-megatall { color: #d81e1e; font-weight: 800; font-size: 23px; letter-spacing: 0.01em; text-shadow: 0 0 6px rgba(255, 40, 40, 0.65), 0 0 18px rgba(255, 30, 30, 0.45), 0 0 32px rgba(255, 60, 0, 0.3); animation: clsGlowR 1.8s ease-in-out infinite; }
+@keyframes clsGlowO { 50% { text-shadow: 0 0 10px rgba(255, 140, 0, 0.8), 0 0 24px rgba(255, 140, 0, 0.5); } }
+@keyframes clsGlowR { 50% { text-shadow: 0 0 10px rgba(255, 40, 40, 0.9), 0 0 26px rgba(255, 30, 30, 0.65), 0 0 44px rgba(255, 80, 0, 0.4); } }
+@media (prefers-reduced-motion: reduce) { .cls-supertall, .cls-megatall { animation: none; } }
+/* Landmark line: only the landmark name is underlined. */
+.sum-best .sum-mark { background: none; color: inherit; padding: 0; }
+.sum-best .sum-mark b { color: var(--cobalt-ink); text-decoration: underline; text-decoration-color: #0047ab; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .sum-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 22px; }
 .sum-section { font-size: 11px; font-weight: 600; color: #6a7a99; letter-spacing: 0.12em; margin: 0 0 8px; padding-top: 14px; border-top: 1px solid var(--cobalt-line); }
 .sum-rows { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 5px; }
