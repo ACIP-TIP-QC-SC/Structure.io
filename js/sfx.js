@@ -5,7 +5,7 @@
   try { muted = JSON.parse(localStorage.getItem("sky_mute") || "false"); } catch (e) { /* private mode */ }
 
   // ---- background music: "Feeling on Top", looped, sits under the sfx ----
-  const MUSIC_SRC = "assets/audio/feeling-on-top.mp3";
+  const MUSIC_SRC = "assets/audio/feeling-on-top.mp3?v=20261127";
   const MUSIC_VOL = 0.22;          // sfx master is 0.6, so music stays well underneath
   let musicGain = null, musicState = "idle", musicEl = null; // idle | loading | playing | failed
 
