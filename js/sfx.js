@@ -11,7 +11,7 @@
     feelingOnTop:   { src: "assets/audio/feeling-on-top.mp3?v=20261127b",       mode: "stream" },
     rhythmSketches: { src: "assets/audio/rhythm-sketches-loop.mp3?v=20261127c", mode: "buffer" }
   };
-  const MUSIC = TRACKS.rhythmSketches;
+  const MUSIC = TRACKS.feelingOnTop;
   const MUSIC_VOL = 0.22;          // sfx master is 0.6, so music stays well underneath
   let musicGain = null, musicState = "idle", musicRouted = false; // idle | playing | failed
   let musicMode = MUSIC.mode, musicEl = null, musicBuf = null, musicWanted = false;
