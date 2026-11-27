@@ -25,7 +25,7 @@ The v2 engine rework from `HANDOFF_engine_rework.md` (written by the ACI Website
 | No "other answers" list and no gem spoiler on the end screen | removed |
 | Flat 2D front-elevation gameplay: floors slam in, dust, sparks, crane climbs, altitude zones, milestone lines, YOU marker | `js/flat.js` |
 | Isometric tower only on the end screen: lazy `Tower.init`, quick timelapse from 60% height, then `finish()` | `endRound()`, `js/tower.js` |
-| WebAudio sound effects (synthesised) + looping background music "Feeling on Top" (`assets/audio/feeling-on-top.mp3`, 96 kbps, starts on first tap/key, volume 0.22 under sfx 0.6); one mute button covers both, persisted in `localStorage.sky_mute` | `js/sfx.js` |
+| WebAudio sound effects (synthesised) + looping background music "Feeling on Top" (`assets/audio/feeling-on-top.mp3`, 96 kbps, streamed from a preloaded <audio> routed through WebAudio, starts instantly on first tap/key, volume 0.22 under sfx 0.6); one mute button covers both, persisted in `localStorage.sky_mute` | `js/sfx.js` |
 | Tier-coloured pips (gold for the gem), HEIGHT plus a Skyscraper+ count, mute button | `renderPips()`, `setHud()` |
 | "Hook" mascot, kept minimal: the crane hook wears a yellow hard hat during the hoist | `drawHook()` in `js/fx.js` |
 
