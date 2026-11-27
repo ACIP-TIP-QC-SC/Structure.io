@@ -78,7 +78,7 @@ body[data-phase="end"] #endBg { opacity: 1; }
 }
 body[data-phase="end"] #topbar::before { opacity: 0; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-.brand img { display: block; width: auto; height: 40px; background: var(--white); border-radius: 8px; padding: 3px 4px; box-shadow: 0 1px 4px rgba(0,30,80,0.18); }
+.brand img { display: block; width: auto; height: 44px; filter: drop-shadow(0 1px 2px rgba(0,20,60,0.35)); }
 .brand .word { font-weight: 700; font-size: 18px; letter-spacing: 0.05em; }
 .brand .word span { color: rgba(255,255,255,0.7); }
 body[data-phase="end"] #topbar { color: var(--cobalt); }
@@ -437,3 +437,5 @@ body[data-phase="reveal"] #card, body[data-phase="topping"] #card { padding: 14p
   #intro .intro-sub { font-size: 15.5px; margin-bottom: 22px; }
   #intro, #intro.panel { padding: 28px 20px 24px; }
 }
+#intro .intro-logo { display: block; width: auto; height: 120px; margin: -6px auto 14px; }
+@media (max-width: 899px) { #intro .intro-logo { height: 96px; } }
