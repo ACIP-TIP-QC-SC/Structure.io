@@ -8,6 +8,9 @@
   const easeOutBack = t => { const s = 1.7; return 1 + (s + 1) * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
   const reduced = () => (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const skip = () => window.SkyGame && window.SkyGame.skipFx;
+  // camera: a round opens close on the crane at street level, then pulls back as the tower rises
+  const V_MIN = 78;    // metres in view at the start (crane is ~34 m tall)
+  const V_REF = 220;   // view height at which scenery is drawn at its base pixel size
   function rng(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
 
   // ---- static scenery (seeded, identical every visit) ----
@@ -26,7 +29,7 @@
   // ---- state ----
   let cv, ctx, W = 0, H = 0, dpr = 1, vpFn, active = true, lastT = 0;
   let built = 0, queuedTop = 0, landing = [], schedule = [], crane = 0, craneFrom = 0, craneT0 = 0, craneDur = 0;
-  let V = 230, s = 2, cx = null, gy = 0, towerW = 80;
+  let V = V_MIN, s = 2, zoom = 1, cx = null, gy = 0, towerW = 80;
   let sweep = null, goldRim = null, crown = null, goldTint = 0;
   let crossed = new Set(), zoneIdx = 0, zoneCaption = null, msFlash = {};
   let pendingDone = null, pendingTier = null, pendingFrom = 0;
@@ -120,14 +123,17 @@
     const vp = vpFn ? vpFn() : { x0: 0, x1: W, y0: 0, y1: H, ruler: W - 80 };
     const top = topNow();
     const regionW = Math.max(80, vp.ruler - vp.x0 - 12);
-    const Vt = Math.max(220, top + 70);
-    V = lerp(V, Vt, Math.min(1, dt * 2.4));
-    const sT = (vp.y1 - vp.y0 - 46) / (V + 30);
+    const Vt = Math.max(V_MIN, top * 1.1 + 62);
+    V = lerp(V, Vt, Math.min(1, dt * 1.8));
+    const usable = vp.y1 - vp.y0 - 46;
+    const sT = usable / (V + 30);
     s = cx === null ? sT : lerp(s, sT, Math.min(1, dt * 4));
+    // horizontal sizes (tower width, crane, neighbours) follow the same zoom so it reads as one camera
+    zoom = clamp(s / (usable / (V_REF + 30)), 1, 3.2);
     const cxT = vp.x0 + regionW / 2;
     cx = cx === null ? cxT : lerp(cx, cxT, Math.min(1, dt * 4));
     gy = vp.y1 - 30;
-    towerW = clamp(regionW * 0.14, 64, 90);
+    towerW = Math.min(clamp(regionW * 0.14, 64, 90) * zoom, regionW * 0.36);
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
@@ -175,7 +181,7 @@
     // distant skyline silhouette (dark, desaturated so the player's tower reads first)
     ctx.fillStyle = "rgba(2,16,52,0.42)";
     for (const b of SKYLINE) {
-      const x = cx + b.fx * (vp.ruler - vp.x0) * 0.55, w = b.w * (vp.ruler - vp.x0);
+      const x = cx + b.fx * (vp.ruler - vp.x0) * 0.55 * zoom, w = b.w * (vp.ruler - vp.x0) * zoom;
       ctx.fillRect(x - w / 2, zOf(b.h), w, b.h * s);
     }
     // cloud wisps (supertall airspace) and back clouds (cloud base)
@@ -224,7 +230,7 @@
     // neighbours (dark navy massing, dim windows)
     const span = (vp.ruler - vp.x0) * 0.5;
     for (const n of NEIGH) {
-      const w = n.w * (vp.ruler - vp.x0), x = cx + n.fx * span - w / 2, h = n.h * s;
+      const w = n.w * (vp.ruler - vp.x0) * zoom, x = cx + n.fx * span * zoom - w / 2, h = n.h * s;
       ctx.fillStyle = "rgba(4,24,70,0.78)";
       ctx.fillRect(x, gy - h, w, h);
       ctx.fillStyle = "rgba(140,175,230,0.10)";
@@ -244,9 +250,10 @@
       ctx.fillRect(c.x, gy + (c.lane ? 16 : 6), 10, 3);
     }
     // lamp posts
-    ctx.strokeStyle = "rgba(255,255,255,0.55)"; ctx.lineWidth = 1.2;
-    for (let x = (vp.x0 % 70) + 20; x < W; x += 70) {
-      ctx.beginPath(); ctx.moveTo(x, gy); ctx.lineTo(x, gy - 16); ctx.lineTo(x + 5, gy - 16); ctx.stroke();
+    ctx.strokeStyle = "rgba(255,255,255,0.55)"; ctx.lineWidth = 1.2 * Math.sqrt(zoom);
+    const lp = 70 * zoom, lh = 16 * zoom;
+    for (let x = cx - Math.ceil((cx + 20) / lp) * lp + 20; x < W; x += lp) {
+      ctx.beginPath(); ctx.moveTo(x, gy); ctx.lineTo(x, gy - lh); ctx.lineTo(x + 5 * zoom, gy - lh); ctx.stroke();
     }
   }
 
@@ -344,34 +351,35 @@
   // ---------------- tower crane (external climbing, beside the tower) ----------------
   function drawCrane(now) {
     if (crown && now - crown.t0 > 1400) return; // dismantled after topping out
-    const mx = cx + towerW / 2 + 10;
+    const k = zoom, lw = Math.sqrt(zoom);
+    const mx = cx + towerW / 2 + 10 * k;
     const topZ = crane + 34;
     const yb = gy, yt = zOf(topZ);
-    const w = 3;
-    ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1;
+    const w = 3 * k;
+    ctx.strokeStyle = "#ffffff"; ctx.lineWidth = lw;
     ctx.beginPath();
     ctx.moveTo(mx - w, yb); ctx.lineTo(mx - w, yt); ctx.moveTo(mx + w, yb); ctx.lineTo(mx + w, yt);
-    const step = 8; let side = -1;
+    const step = 8 * k; let side = -1;
     for (let y = yb; y > yt; y -= step) { ctx.moveTo(mx + side * w, y); ctx.lineTo(mx - side * w, Math.max(yt, y - step)); side = -side; }
     ctx.stroke();
     // jib over the tower, counter-jib behind
-    const jib = Math.max(90, towerW * 1.8), cj = jib * 0.32;
-    ctx.lineWidth = 2;
+    const jib = Math.max(90 * k, towerW * 1.8), cj = jib * 0.32, apex = 16 * k;
+    ctx.lineWidth = 2 * lw;
     ctx.beginPath(); ctx.moveTo(mx + cj, yt); ctx.lineTo(mx - jib, yt); ctx.stroke();
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(mx, yt - 16); ctx.lineTo(mx - jib, yt); ctx.moveTo(mx, yt - 16); ctx.lineTo(mx + cj, yt); ctx.moveTo(mx, yt); ctx.lineTo(mx, yt - 16); ctx.stroke();
-    ctx.fillStyle = "#c7d3e6"; ctx.fillRect(mx + cj - 12, yt, 12, 8);
-    ctx.fillStyle = "#ffffff"; ctx.fillRect(mx - 9, yt + 1, 7, 6);
+    ctx.lineWidth = lw;
+    ctx.beginPath(); ctx.moveTo(mx, yt - apex); ctx.lineTo(mx - jib, yt); ctx.moveTo(mx, yt - apex); ctx.lineTo(mx + cj, yt); ctx.moveTo(mx, yt); ctx.lineTo(mx, yt - apex); ctx.stroke();
+    ctx.fillStyle = "#c7d3e6"; ctx.fillRect(mx + cj - 12 * k, yt, 12 * k, 8 * k);
+    ctx.fillStyle = "#ffffff"; ctx.fillRect(mx - 9 * k, yt + k, 7 * k, 6 * k);
     // trolley, cable and load (lifts the crown when topping out)
     const r = crown ? (cx - mx) * -1 : jib * (0.45 + 0.3 * Math.sin(now / 1800));
     const tx = mx - Math.abs(r);
-    const hookY = crown ? lerp(gy - 40, zOf(built), 1 - Math.pow(1 - clamp((now - crown.t0) / 1100, 0, 1), 3)) - 62 : yt + 26 + 10 * Math.sin(now / 900);
+    const hookY = crown ? lerp(gy - 40, zOf(built), 1 - Math.pow(1 - clamp((now - crown.t0) / 1100, 0, 1), 3)) - 62 : yt + (26 + 10 * Math.sin(now / 900)) * k;
     ctx.strokeStyle = "rgba(255,255,255,0.8)";
     ctx.beginPath(); ctx.moveTo(tx, yt); ctx.lineTo(tx, hookY); ctx.stroke();
-    ctx.fillStyle = "#ffc629"; ctx.beginPath(); ctx.arc(tx, hookY, 3, Math.PI, 0); ctx.fill();
-    if (!crown) { ctx.fillStyle = "#e9eef5"; ctx.fillRect(tx - 7, hookY + 3, 14, 4); }
+    ctx.fillStyle = "#ffc629"; ctx.beginPath(); ctx.arc(tx, hookY, 3 * k, Math.PI, 0); ctx.fill();
+    if (!crown) { ctx.fillStyle = "#e9eef5"; ctx.fillRect(tx - 7 * k, hookY + 3 * k, 14 * k, 4 * k); }
     // aviation light
-    if (Math.floor(now / 650) % 2 === 0) { ctx.fillStyle = "#ff3b3b"; ctx.beginPath(); ctx.arc(mx, yt - 18, 2.2, 0, Math.PI * 2); ctx.fill(); }
+    if (Math.floor(now / 650) % 2 === 0) { ctx.fillStyle = "#ff3b3b"; ctx.beginPath(); ctx.arc(mx, yt - apex - 2 * k, 2.2 * lw, 0, Math.PI * 2); ctx.fill(); }
   }
 
   // ---------------- ruler, milestones, YOU marker, zone caption ----------------
@@ -404,7 +412,7 @@
     // ruler
     ctx.strokeStyle = "rgba(255,255,255,0.85)"; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.moveTo(rx, gy); ctx.lineTo(rx, ytop); ctx.stroke();
-    let major = 10; for (const st of [10, 20, 25, 50, 100, 200, 250, 500]) { major = st; if (st * s >= 42) break; }
+    let major = 5; for (const st of [5, 10, 20, 25, 50, 100, 200, 250, 500]) { major = st; if (st * s >= 42) break; }
     const minor = major / 5;
     ctx.fillStyle = "#ffffff"; ctx.textAlign = "left"; ctx.textBaseline = "middle"; ctx.lineWidth = 1;
     ctx.beginPath();
@@ -464,6 +472,7 @@
     },
     reset() {
       built = 0; queuedTop = 0; landing = []; schedule = []; crane = 0; craneDur = 0;
+      V = V_MIN; cx = null; // next frame snaps back to the street-level close-up
       sweep = goldRim = crown = null; goldTint = 0; crossed = new Set(); zoneIdx = 0; zoneCaption = null; msFlash = {};
       if (pendingDone) { const r = pendingDone; pendingDone = null; r(); }
     },
