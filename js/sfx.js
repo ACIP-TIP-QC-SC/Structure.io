@@ -4,32 +4,61 @@
   let ac = null, master = null, muted = false;
   try { muted = JSON.parse(localStorage.getItem("sky_mute") || "false"); } catch (e) { /* private mode */ }
 
-  // ---- background music: "Feeling on Top", looped, sits under the sfx ----
-  const MUSIC_SRC = "assets/audio/feeling-on-top.mp3?v=20261127b";
+  // ---- background music: looped, sits under the sfx ----
+  // To switch tracks, change MUSIC below. "buffer" = decoded up front and looped
+  // sample-accurately (for short loops); "stream" = <audio> element (for long songs).
+  const TRACKS = {
+    feelingOnTop:   { src: "assets/audio/feeling-on-top.mp3?v=20261127b",       mode: "stream" },
+    rhythmSketches: { src: "assets/audio/rhythm-sketches-loop.mp3?v=20261127c", mode: "buffer" }
+  };
+  const MUSIC = TRACKS.rhythmSketches;
   const MUSIC_VOL = 0.22;          // sfx master is 0.6, so music stays well underneath
   let musicGain = null, musicState = "idle", musicRouted = false; // idle | playing | failed
+  let musicMode = MUSIC.mode, musicEl = null, musicBuf = null, musicWanted = false;
 
-  // A streaming <audio> element, preloaded as soon as the page opens, so the
-  // first tap starts it immediately (no waiting for a full download + decode).
-  const musicEl = new Audio();
-  musicEl.preload = "auto"; musicEl.loop = true; musicEl.src = MUSIC_SRC;
-  try { musicEl.load(); } catch (e) { /* ignore */ }
+  function makeElement() {
+    musicEl = new Audio();
+    musicEl.preload = "auto"; musicEl.loop = true; musicEl.src = MUSIC.src;
+    try { musicEl.load(); } catch (e) { /* ignore */ }
+  }
+
+  if (musicMode === "buffer") {
+    // Download + decode while the player reads the intro, so the first tap is instant.
+    const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    const fallback = () => { musicMode = "stream"; makeElement(); if (musicWanted) startMusic(); };
+    if (!OAC || !window.fetch) fallback();
+    else fetch(MUSIC.src)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+      .then(data => new Promise((res, rej) => new OAC(2, 44100, 44100).decodeAudioData(data, res, rej)))
+      .then(buf => { musicBuf = buf; if (musicWanted) startMusic(); })
+      .catch(fallback);   // e.g. fetch blocked on file://
+  } else makeElement();
 
   function startMusic() {
-    if (muted || musicState === "playing" || musicState === "failed") return;
-    if (ac && !musicRouted) {
-      // Route through WebAudio so volume works everywhere (iOS ignores el.volume).
-      try {
-        const src = ac.createMediaElementSource(musicEl);
-        src.connect(musicGain); musicRouted = true;
-      } catch (e) { musicRouted = true; musicEl.volume = MUSIC_VOL; }
+    musicWanted = true;
+    if (muted || musicState === "playing" || musicState === "failed" || !ac) return;
+    if (musicMode === "buffer") {
+      if (!musicBuf) return;        // starts as soon as decoding finishes
+      const src = ac.createBufferSource();
+      src.buffer = musicBuf; src.loop = true;
+      src.connect(musicGain); src.start();
+      musicState = "playing";       // keeps running; mute = gain 0, hidden tab = ac.suspend()
+      return;
     }
-    if (!musicRouted) musicEl.volume = MUSIC_VOL;
+    if (!musicRouted) {
+      // Route through WebAudio so volume works everywhere (iOS ignores el.volume).
+      try { ac.createMediaElementSource(musicEl).connect(musicGain); }
+      catch (e) { musicEl.volume = MUSIC_VOL; }
+      musicRouted = true;
+    }
     musicState = "playing";
     const p = musicEl.play();
     if (p && p.catch) p.catch(() => { musicState = "idle"; });
   }
-  function stopMusic() { musicEl.pause(); if (musicState === "playing") musicState = "idle"; }
+  function stopMusic() {
+    if (musicMode !== "stream" || !musicEl) return;
+    musicEl.pause(); if (musicState === "playing") musicState = "idle";
+  }
 
   function unlock() {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -152,6 +181,7 @@
     },
     get muted() { return muted; },
     get musicState() { return musicState; },
-    get musicTime() { return musicEl.currentTime; }
+    get musicTime() { return musicMode === "buffer" ? (musicState === "playing" && ac ? ac.currentTime : 0) : (musicEl ? musicEl.currentTime : 0); },
+    get musicMode() { return musicMode; }
   };
 })();
