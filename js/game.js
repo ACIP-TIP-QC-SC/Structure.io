@@ -60,7 +60,8 @@
       const r = $("#summary").getBoundingClientRect();
       return { x0: r.right + 8, x1: W, y0: top + 10, y1: H - 54, ruler: W - 76 };
     }
-    const panel = state.phase === "intro" ? $("#intro") : $("#card");
+    if (state.phase === "intro") return { x0: 0, x1: W, y0: top + 6, y1: H - 16, ruler: W - (mobile() ? 78 : 96) };
+    const panel = $("#card");
     const r = panel.getBoundingClientRect();
     if (mobile()) return { x0: 0, x1: W, y0: top, y1: (r.top || H * 0.45) - 4, ruler: W - 78 };
     return { x0: (r.right || 440) + 12, x1: W, y0: top + 6, y1: H - 16, ruler: W - 96 };
@@ -389,12 +390,7 @@
     showCountdown();
   }
 
-  function renderIntro() {
-    const best = store.get("sky_best", 0);
-    $("#tierLadder").innerHTML = TIERS.slice().reverse().map(t => `
-      <li class="t-${t.key}"><span class="sw">${tierIcon(t.key, 18)}</span><span class="tn">${esc(t.name)}${t.trap ? ' <span class="trap">TRAP</span>' : ""}</span><span class="tm mono">+${t.m} m</span></li>`).join("");
-    $("#introBest").textContent = best ? `Your tallest tower: ${best} m` : `${QUESTIONS.length} prompts in the blueprint library`;
-  }
+  function renderIntro() { /* start menu is static: title, subtitle, Break ground */ }
 
   function syncMute() {
     const m = window.Sfx ? Sfx.muted : true;

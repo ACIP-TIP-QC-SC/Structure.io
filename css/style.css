@@ -421,3 +421,19 @@ body[data-phase="reveal"] #card, body[data-phase="topping"] #card { padding: 14p
 @media (max-width: 899px) {
   body[data-phase="reveal"] #card, body[data-phase="hoist"] #card { visibility: hidden; }
 }
+
+/* ---------- start menu: centered title, subtitle, Break ground ---------- */
+#intro, #intro.panel {
+  left: 50%; top: 50%; right: auto; bottom: auto;
+  transform: translate(-50%, -50%);
+  width: min(440px, calc(100vw - 32px)); height: auto; max-height: none;
+  border-radius: var(--radius); padding: 34px 30px 30px; text-align: center;
+}
+#intro .intro-title { font-size: 52px; line-height: 1; margin: 0 0 12px; letter-spacing: -0.02em; color: var(--cobalt); }
+#intro .intro-sub { margin: 0 0 26px; font-size: 17px; line-height: 1.4; color: #33456b; }
+#intro .btn { margin: 0; }
+@media (max-width: 899px) {
+  #intro .intro-title { font-size: 40px; }
+  #intro .intro-sub { font-size: 15.5px; margin-bottom: 22px; }
+  #intro, #intro.panel { padding: 28px 20px 24px; }
+}
