@@ -1,8 +1,37 @@
-/* Skyscraper.io — synthesised sound effects (WebAudio, no audio files) */
+/* Skyscraper.io — synthesised sound effects (WebAudio) + looping background music */
 (function () {
   "use strict";
   let ac = null, master = null, muted = false;
   try { muted = JSON.parse(localStorage.getItem("sky_mute") || "false"); } catch (e) { /* private mode */ }
+
+  // ---- background music: "Feeling on Top", looped, sits under the sfx ----
+  const MUSIC_SRC = "assets/audio/feeling-on-top.mp3";
+  const MUSIC_VOL = 0.22;          // sfx master is 0.6, so music stays well underneath
+  let musicGain = null, musicState = "idle", musicEl = null; // idle | loading | playing | failed
+
+  function startMusic() {
+    if (muted || !ac || musicState !== "idle") return;
+    musicState = "loading";
+    fetch(MUSIC_SRC)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+      .then(buf => new Promise((res, rej) => ac.decodeAudioData(buf, res, rej)))
+      .then(audio => {
+        // AudioBufferSourceNode loops sample-accurately (no gap like <audio loop>)
+        const src = ac.createBufferSource();
+        src.buffer = audio; src.loop = true;
+        src.connect(musicGain); src.start();
+        musicState = "playing";
+      })
+      .catch(() => {
+        // fetch is blocked on file:// — fall back to a plain looping <audio>
+        try {
+          musicEl = new Audio(MUSIC_SRC);
+          musicEl.loop = true; musicEl.volume = MUSIC_VOL;
+          musicEl.muted = muted;
+          musicEl.play().then(() => { musicState = "playing"; }, () => { musicState = "idle"; musicEl = null; });
+        } catch (e) { musicState = "failed"; }
+      });
+  }
 
   function unlock() {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -14,10 +43,24 @@
         master = ac.createGain();
         master.gain.value = muted ? 0 : 0.6;
         master.connect(comp); comp.connect(ac.destination);
+        musicGain = ac.createGain();
+        musicGain.gain.value = muted ? 0 : MUSIC_VOL;
+        musicGain.connect(ac.destination);
       }
-      if (ac.state === "suspended") ac.resume();
+      if (ac.state === "suspended" && !document.hidden) ac.resume();
+      startMusic();
     } catch (e) { ac = null; }
   }
+
+  // Browsers only allow audio after a user gesture: start on the first tap/key anywhere.
+  ["pointerdown", "keydown", "touchend"].forEach(ev =>
+    window.addEventListener(ev, unlock, { capture: true, passive: true }));
+  // Pause everything while the tab is in the background.
+  document.addEventListener("visibilitychange", () => {
+    if (!ac) return;
+    if (document.hidden) { ac.suspend(); if (musicEl) musicEl.pause(); }
+    else { ac.resume(); if (musicEl && !muted) musicEl.play().catch(() => {}); }
+  });
 
   // ---- building blocks ----
   function env(g, t, a, peak, d) {
@@ -106,7 +149,11 @@
       muted = !!m;
       try { localStorage.setItem("sky_mute", JSON.stringify(muted)); } catch (e) { /* ignore */ }
       if (ac && master) master.gain.setTargetAtTime(muted ? 0 : 0.6, ac.currentTime, 0.02);
+      if (ac && musicGain) musicGain.gain.setTargetAtTime(muted ? 0 : MUSIC_VOL, ac.currentTime, 0.08);
+      if (musicEl) musicEl.muted = muted;
+      if (!muted) startMusic();
     },
-    get muted() { return muted; }
+    get muted() { return muted; },
+    get musicState() { return musicState; }
   };
 })();
